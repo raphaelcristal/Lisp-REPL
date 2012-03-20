@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Lisp REPL</title>
+    <style>
+      html, body {
+        background-color: #333333;
+        margin: 0;
+        padding: 1%;
+        height: 100%;
+        border: none;
+      }
+      #wrapper {
+        background-color: #333333;
+        width: 90%;
+        margin: auto; 
+        min-height: 100%; 
+        height: auto !important; 
+        height: 100%; 
+        overflow: hidden !important;
+        
+      }
+      #inputArea {
+        background-color: #333333;
+        width: 90%;
+        height: 95%;
+        position: absolute;
+        border: none;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <script src='repl.js' type="text/javascript"></script>
+    <div id='wrapper'>
+      <textarea id='inputArea'>$ </textarea>
+    </div>
+  </body>
+</html>
