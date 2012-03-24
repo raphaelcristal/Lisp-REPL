@@ -17,7 +17,8 @@ build =  ->
   coffee = spawnInterpreter ['-j', 'src/js/combined.js', '-c', 'src/coffee']
 
 test =   ->
-  coffee = spawnInterpreter ['-b', '-c', '-o', 'src/js', 'src/coffee']
+  spawnInterpreter ['-b', '-c', '-o', 'src/js', 'src/coffee']
+  spawnInterpreter ['-b', '-c', '-o', 'spec/js', 'spec/coffee']
 
 task 'build', 'compile and join sources', build 
 task 'test', 'compile src so it can be tested with SpecRunner', test
