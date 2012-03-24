@@ -1,0 +1,4 @@
+src/js/*.js
+spec/js/*.js
+.project
+lib/jasmine-1.1.0

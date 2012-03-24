@@ -1,4 +1,16 @@
-KEYS = ENTER: 13
+###
+  Lisp Datatypes
+  LispNil:      maps to Javascript's null
+  LispTrue:     maps to JavaScript's True
+  LispFalse:    maps to JavaScript's False
+  LispNumber:   maps to JavaScript's Number
+  LispSymbol:   maps to JavaScript's String, will not be evaluated
+  LispCons:     holds a pair of data, first and rest   
+###
+
+LispNil = ->
+   @toString -> "Nil"
+  
 GLOBALS =
   '+': (x) => x.reduce (a,b) -> a + b 
   '-': (x) => x.reduce (a,b) -> a - b
@@ -8,34 +20,6 @@ GLOBALS =
     GLOBALS[x[0]]=x[1]
     return
   
-window.onload = =>
-  inputArea = document.getElementById 'inputArea'
-  inputArea.onkeydown = checkInput
-  inputArea.onkeyup = newLine
-  inputArea.focus()
-  inputArea.setSelectionRange 2,2
-
-checkInput = (event) -> 
-  if event.keyCode is KEYS.ENTER
-    inputArea = document.getElementById 'inputArea'
-    lines = inputArea.value.split '\n' 
-    lastLine = lines[lines.length-1]
-    lastLine = lastLine.replace '\$ ', ''
-    if lastLine is 'clear'
-      inputArea.value = ''
-      return
-    
-    tokens = tokenize lastLine
-    parsed = evalTokens tokens
-    result = evalExpression parsed
-    if result? then inputArea.value += '\n'+result
-        
-newLine = (event) ->
-  if event.keyCode is KEYS.ENTER
-    inputArea = document.getElementById 'inputArea'
-    inputArea.value += "$ "
-
-
 tokenize = (string) ->
   withSpaces = string.replace /\(/g, ' ( '
   withSpaces = withSpaces.replace /\)/g, ' ) '
