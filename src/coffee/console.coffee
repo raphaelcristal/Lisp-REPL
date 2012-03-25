@@ -19,7 +19,7 @@ checkInput = (event) ->
       return
     
     tokens = tokenize lastLine
-    parsed = evalTokens tokens
+    parsed = parseTokens tokens
     result = evalExpression parsed
     if result? then inputArea.value += '\n'+result
         

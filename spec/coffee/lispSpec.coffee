@@ -26,6 +26,11 @@ describe 'Datatypes', ->
     expect(number1.toString()).toEqual '5'
     expect(number2.toString()).toEqual '1.3434'
   
+  it 'procedure', ->
+    procedure = new Lisp.Procedure "+", (a,b) -> a+b
+    expect(procedure.toString()).toEqual "#<procedure:+>"
+    expect(procedure 1,2).toEqual 3
+      
   it 'symbol', ->
     symbol1 = new Lisp.Symbol 'abcd'
     symbol2 = new Lisp.Symbol '5'

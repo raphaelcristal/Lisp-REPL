@@ -19,6 +19,10 @@ Lisp.Number = class
   constructor: (@value) ->
   toString: -> "#{@value}"
   
+Lisp.Procedure = (name, opt) ->
+  opt.toString = -> "#<procedure:#{name}>"
+  opt
+  
 Lisp.Symbol = class
   constructor: (value) ->
     @value = "#{value}"

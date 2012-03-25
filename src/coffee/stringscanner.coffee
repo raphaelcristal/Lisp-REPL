@@ -6,22 +6,23 @@ tokenize = (string) ->
   tokens = string.split(' ')
   token for token in tokens when token isnt ''
   
-evalTokens = (tokens) ->
+parseTokens = (tokens) ->
   token = tokens.shift()
   if token is '('
     expression = []
     while tokens[0] isnt ')'
-      expression.push evalTokens tokens
+      expression.push parseTokens tokens
     tokens.shift() 
     expression
   else
     parseValue(token)
     
 parseValue = (value) ->
-  parsed = Number(value)
-  if isNaN parsed
-    return value
-  parsed
+  asNumber = Number(value)
+  if not isNaN asNumber then return Lisp.Number asNumber
+  if value is 'true' then return Lisp.True
+  if value is 'false' then return Lisp.False
+  if value.indexOf 0 is '\'' then return Lisp.Symbol value.replace "'", ''
   
 evalExpression = (expression) ->
   switch typeof expression
