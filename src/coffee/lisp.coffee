@@ -1,16 +1,34 @@
-###
-  Lisp Datatypes
-  LispNil:      maps to Javascript's null
-  LispTrue:     maps to JavaScript's True
-  LispFalse:    maps to JavaScript's False
-  LispNumber:   maps to JavaScript's Number
-  LispSymbol:   maps to JavaScript's String, will not be evaluated
-  LispCons:     holds a pair of data, first and rest   
-###
-
-LispNil = ->
-   @toString -> "Nil"
+class Lisp
   
+Lisp.Boolean = class
+  constructor: (@value) ->
+  toString: -> if @value then '#t' else '#f'
+
+Lisp.Cons = class
+  constructor: (@first, @rest) ->
+  toString: -> "'(#{@first.toString()} . #{@rest.toString()})"
+
+Lisp.False = new Lisp.Boolean false
+
+Lisp.Nil = class
+  constructor: ->
+    @value = null
+  toString: -> 'Nil'
+  
+Lisp.Number = class
+  constructor: (@value) ->
+  toString: -> "#{@value}"
+  
+Lisp.Symbol = class
+  constructor: (value) ->
+    @value = "#{value}"
+  toString: -> "'#{@value}"
+
+Lisp.True = new Lisp.Boolean true
+
+window.Lisp = Lisp
+
+###  
 GLOBALS =
   '+': (x) => x.reduce (a,b) -> a + b 
   '-': (x) => x.reduce (a,b) -> a - b
@@ -19,6 +37,7 @@ GLOBALS =
   'define': (x) => 
     GLOBALS[x[0]]=x[1]
     return
+###
   
 
   
