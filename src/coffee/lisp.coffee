@@ -32,16 +32,18 @@ Lisp.True = new Lisp.Boolean true
 
 window.Lisp = Lisp
 
-###  
 GLOBALS =
-  '+': (x) => x.reduce (a,b) -> a + b 
-  '-': (x) => x.reduce (a,b) -> a - b
-  '*': (x) => x.reduce (a,b) -> a * b
-  '/': (x) => x.reduce (a,b) -> a / b
-  'define': (x) => 
-    GLOBALS[x[0]]=x[1]
-    return
-###
+  '+': new Lisp.Procedure('+', (args) -> 
+        args.reduce (a,b) -> if a.value? then a.value + b.value else a + b.value)
+  '-': new Lisp.Procedure('-', (args) -> 
+        args.reduce (a,b) -> if a.value? then a.value - b.value else a - b.value)
+  '*': new Lisp.Procedure('*', (args) -> 
+        args.reduce (a,b) -> if a.value? then a.value * b.value else a * b.value)
+  '/': new Lisp.Procedure('/', (args) -> 
+        args.reduce (a,b) -> if a.value? then a.value / b.value else a / b.value)
+  #'define': (x) => 
+   # GLOBALS[x[0]]=x[1]
+    #return
   
 
   

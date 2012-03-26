@@ -38,4 +38,27 @@ describe 'Datatypes', ->
     expect(symbol2.value).toEqual '5'
     expect(symbol1.toString()).toEqual '\'abcd'
     expect(symbol2.toString()).toEqual '\'5'
+
+describe 'builtins', ->
+  
+  it 'should add a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [1..10])
+    result = GLOBALS['+'](numbers)
+    expect(result).toEqual 55
+    
+  it 'should subtract a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [10,2,1])
+    result = GLOBALS['-'](numbers)
+    expect(result).toEqual 7
+    
+  it 'should multiply a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [1..10])
+    result = GLOBALS['*'](numbers)
+    expect(result).toEqual 3628800
+    
+  it 'should divide a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [100,5,2])
+    result = GLOBALS['/'](numbers)
+    expect(result).toEqual 10
+    
     
