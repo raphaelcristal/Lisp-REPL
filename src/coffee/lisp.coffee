@@ -1,3 +1,5 @@
+Array::type = "JList"
+
 class Lisp
   
 Lisp.Arg = class
@@ -44,13 +46,13 @@ window.Lisp = Lisp
 
 GLOBALS =
   '+': new Lisp.Procedure('+', (args) -> 
-        args.reduce (a,b) -> if a.value? then a.value + b.value else a + b.value)
+        args.reduce (a,b) -> new Lisp.Number a.value + b.value)
   '-': new Lisp.Procedure('-', (args) -> 
-        args.reduce (a,b) -> if a.value? then a.value - b.value else a - b.value)
+        args.reduce (a,b) -> new Lisp.Number a.value - b.value)
   '*': new Lisp.Procedure('*', (args) -> 
-        args.reduce (a,b) -> if a.value? then a.value * b.value else a * b.value)
+        args.reduce (a,b) -> new Lisp.Number a.value * b.value)
   '/': new Lisp.Procedure('/', (args) -> 
-        args.reduce (a,b) -> if a.value? then a.value / b.value else a / b.value)
+        args.reduce (a,b) -> new Lisp.Number a.value / b.value)
   #'define': (x) => 
    # GLOBALS[x[0]]=x[1]
     #return
