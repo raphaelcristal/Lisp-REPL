@@ -19,10 +19,13 @@ parseTokens = (tokens) ->
     
 parseValue = (value) ->
   asNumber = Number(value)
-  if not isNaN asNumber then return Lisp.Number asNumber
+  if not isNaN asNumber then return new Lisp.Number asNumber
   if value is 'true' then return Lisp.True
   if value is 'false' then return Lisp.False
-  if value.indexOf 0 is '\'' then return Lisp.Symbol value.replace "'", ''
+  if value.charAt(0) is '\'' then return new Lisp.Symbol value.replace "'", ''
+  if value of GLOBALS then return GLOBALS[value] else return new Lisp.Arg value
+  
+  throw 'Token not recognized!'
   
 evalExpression = (expression) ->
   switch typeof expression

@@ -22,6 +22,7 @@ describe 'tokenizer', ->
     
     
 describe 'value parser', ->
+  
   it 'should parse boolean true', ->
     parsed = parseValue 'true'
     expect(parsed).toBe Lisp.True
@@ -32,15 +33,27 @@ describe 'value parser', ->
     
   it 'should parse an integer', ->
     parsed = parseValue '1'
-    expect(parsed).toEqual Lisp.Number 1
+    expect(parsed).toEqual new Lisp.Number 1
     
   it 'should parse a float', ->
     parsed = parseValue 1.1
-    expect(parsed).toEqual Lisp.Number 1.1
+    expect(parsed).toEqual new Lisp.Number 1.1
     
   it 'should parse symbol', ->
     parsed = parseValue "'abc"
-    expect(parsed).toEqual Lisp.Symbol 'abc'
+    expect(parsed).toEqual new Lisp.Symbol 'abc'
+    
+  it 'should recognize builtin functions', ->
+    tokens = ['+', '-', '*', '/']  
+    parsed = (parseValue token for token in tokens)
+    for procedure in parsed
+      expect(procedure.type).toEqual 'Procedure' 
+    
+describe 'token parser', ->
   
-   
-  
+  it 'should recognize a nested expression', ->
+    tokens = ['(', '+', '1', '(', '+', '1', '1', ')', ')']
+    parsed = parseTokens tokens
+    expected = [GLOBALS['+'], new Lisp.Number(1), 
+                [GLOBALS['+'], new Lisp.Number(1), new Lisp.Number(1)]]
+    expect(parsed).toEqual expected
