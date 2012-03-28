@@ -28,13 +28,9 @@ parseValue = (value) ->
   throw 'Token not recognized!'
   
 evalExpression = (expression) ->
-  switch typeof expression
-    when 'object'
-      exp = (evalExpression x for x in expression) 
-      func = exp.shift()
-      func(exp)
-    when 'string'
-      if expression of GLOBALS then return GLOBALS[expression]  
-      expression
-    when 'number' then expression
-    else throw 'error' 
+    if expression.type is 'JList'
+      procedure = expression.shift()
+      args = (evalExpression x for x in expression)
+      procedure(args)
+    else 
+      expression 

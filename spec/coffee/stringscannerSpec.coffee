@@ -57,3 +57,12 @@ describe 'token parser', ->
     expected = [GLOBALS['+'], new Lisp.Number(1), 
                 [GLOBALS['+'], new Lisp.Number(1), new Lisp.Number(1)]]
     expect(parsed).toEqual expected
+
+describe 'expression evalution', ->
+  
+  it 'should evaluate a nested expression', ->
+    expression = [GLOBALS['+'], 
+                    [GLOBALS['+'], new Lisp.Number(1), new Lisp.Number(1)],
+                    [GLOBALS['+'], new Lisp.Number(1), new Lisp.Number(1)]]
+    evaluated = evalExpression expression
+    expect(evaluated).toEqual new Lisp.Number 4

@@ -21,7 +21,7 @@ checkInput = (event) ->
     tokens = tokenize lastLine
     parsed = parseTokens tokens
     result = evalExpression parsed
-    if result? then inputArea.value += '\n'+result
+    if result? then inputArea.value += '\n'+result.toString()
         
 newLine = (event) ->
   if event.keyCode is KEYS.ENTER
