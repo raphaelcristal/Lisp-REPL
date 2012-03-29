@@ -20,7 +20,9 @@ checkInput = (event) ->
     
     tokens = tokenize lastLine
     parsed = parseTokens tokens
+    console.log parsed
     result = evalExpression parsed
+    console.log result
     if result? then inputArea.value += '\n'+result.toString()
         
 newLine = (event) ->

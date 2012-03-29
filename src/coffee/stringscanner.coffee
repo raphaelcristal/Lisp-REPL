@@ -32,7 +32,7 @@ parseValue = (value) ->
   
   new Lisp.Var value
   
-evalExpression = (expression) ->
+evalExpression = (expression, env=GLOBALS) ->
     if expression.type is 'JList'
       evaluated = (evalExpression x for x in expression)
       procedure = evaluated.shift()

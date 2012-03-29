@@ -3,7 +3,7 @@ Array::type = "JList"
 Nil = class
   constructor: ->
     @value = null
-  toString: -> 'Nil'
+  toString: -> '()'
   type: 'Nil'
 
 class Lisp

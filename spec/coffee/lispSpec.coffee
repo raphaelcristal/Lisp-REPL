@@ -16,7 +16,7 @@ describe 'Datatypes', ->
   it 'nil', ->
     nil = Lisp.Nil
     expect(nil.value).toBeNull
-    expect(nil.toString()).toEqual 'Nil'  
+    expect(nil.toString()).toEqual '()'  
     
   it 'number', ->
     number1 = new Lisp.Number 5
