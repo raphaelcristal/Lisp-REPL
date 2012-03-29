@@ -19,7 +19,11 @@ describe 'tokenizer', ->
   it 'should recognize a quoted input with extra whitespaces', ->
     tokenized = tokenize '\'   (a b c)'
     expect(tokenized).toEqual ['\'(', 'a', 'b', 'c', ')']
-    
+
+  it 'should recognize a list', ->
+    tokenized = tokenize '\'(1 2)'
+    expect(tokenized).toEqual ['\'(', '1', '2', ')']
+  
     
 describe 'value parser', ->
   
@@ -44,18 +48,26 @@ describe 'value parser', ->
     expect(parsed).toEqual new Lisp.Symbol 'abc'
     
   it 'should recognize variables', ->
-    tokens = ['+', '-', 'a', 'b']  
+    tokens = ['+', '-', 'a', 'b']
     parsed = (parseValue token for token in tokens)
     for procedure in parsed
       expect(procedure.type).toEqual 'Variable'
+  
     
 describe 'token parser', ->
   
   it 'should recognize a nested expression', ->
     tokens = ['(', '+', '1', '(', '+', '1', '1', ')', ')']
     parsed = parseTokens tokens
-    expected = [new Lisp.Var('+'), new Lisp.Number(1), 
+    expected = [new Lisp.Var('+'), new Lisp.Number(1),
                 [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)]]
+    expect(parsed).toEqual expected
+  
+  it 'should recognize a list', ->
+    tokens = ['\'(', '1', '2', ')']
+    parsed = parseTokens tokens
+    expected = new Lisp.Cons(new Lisp.Number(1), new Lisp.Cons(
+                 new Lisp.Number(2), Lisp.Nil))
     expect(parsed).toEqual expected
 
 describe 'expression evalution', ->
@@ -66,3 +78,11 @@ describe 'expression evalution', ->
                     [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)]]
     evaluated = evalExpression expression
     expect(evaluated).toEqual new Lisp.Number 4
+
+describe 'list builder', ->
+  
+  it 'should build a nested list', ->
+    values = [1,2,3]
+    list = buildList values
+    expected = new Lisp.Cons(1,new Lisp.Cons(2,new Lisp.Cons(3, Lisp.Nil)))
+    expect(list).toEqual expected

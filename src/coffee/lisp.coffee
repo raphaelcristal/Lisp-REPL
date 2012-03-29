@@ -1,5 +1,11 @@
 Array::type = "JList"
 
+Nil = class
+  constructor: ->
+    @value = null
+  toString: -> 'Nil'
+  type: 'Nil'
+
 class Lisp
   
 Lisp.Var = class
@@ -18,11 +24,7 @@ Lisp.Cons = class
 
 Lisp.False = new Lisp.Boolean false
 
-Lisp.Nil = class
-  constructor: ->
-    @value = null
-  toString: -> 'Nil'
-  type: 'Nil'
+Lisp.Nil = new Nil
   
 Lisp.Number = class
   constructor: (@value) ->

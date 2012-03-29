@@ -14,6 +14,12 @@ parseTokens = (tokens) ->
       expression.push parseTokens tokens
     tokens.shift()
     expression
+  else if token is '\'('
+    values = []
+    until tokens[0] is ')'
+      values.push parseTokens tokens
+    tokens.shift()
+    buildList(values)
   else
     parseValue(token)
     
@@ -35,3 +41,9 @@ evalExpression = (expression) ->
       GLOBALS[expression.value]
     else
       expression
+
+buildList = (values) ->
+  if values.length is 0
+    return Lisp.Nil
+  else
+    return new Lisp.Cons values.shift(), buildList(values)

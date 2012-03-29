@@ -14,7 +14,7 @@ describe 'Datatypes', ->
    
     
   it 'nil', ->
-    nil = new Lisp.Nil
+    nil = Lisp.Nil
     expect(nil.value).toBeNull
     expect(nil.toString()).toEqual 'Nil'  
     
