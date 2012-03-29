@@ -12,7 +12,7 @@ parseTokens = (tokens) ->
     expression = []
     while tokens[0] isnt ')'
       expression.push parseTokens tokens
-    tokens.shift() 
+    tokens.shift()
     expression
   else
     parseValue(token)
@@ -33,5 +33,5 @@ evalExpression = (expression) ->
       procedure(evaluated)
     else if expression.type is 'Variable' and expression.value of GLOBALS
       GLOBALS[expression.value]
-    else 
-      expression 
+    else
+      expression
