@@ -43,26 +43,26 @@ describe 'value parser', ->
     parsed = parseValue "'abc"
     expect(parsed).toEqual new Lisp.Symbol 'abc'
     
-  it 'should recognize builtin functions', ->
-    tokens = ['+', '-', '*', '/']  
+  it 'should recognize variables', ->
+    tokens = ['+', '-', 'a', 'b']  
     parsed = (parseValue token for token in tokens)
     for procedure in parsed
-      expect(procedure.type).toEqual 'Procedure' 
+      expect(procedure.type).toEqual 'Variable'
     
 describe 'token parser', ->
   
   it 'should recognize a nested expression', ->
     tokens = ['(', '+', '1', '(', '+', '1', '1', ')', ')']
     parsed = parseTokens tokens
-    expected = [GLOBALS['+'], new Lisp.Number(1), 
-                [GLOBALS['+'], new Lisp.Number(1), new Lisp.Number(1)]]
+    expected = [new Lisp.Var('+'), new Lisp.Number(1), 
+                [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)]]
     expect(parsed).toEqual expected
 
 describe 'expression evalution', ->
   
   it 'should evaluate a nested expression', ->
-    expression = [GLOBALS['+'], 
-                    [GLOBALS['+'], new Lisp.Number(1), new Lisp.Number(1)],
-                    [GLOBALS['+'], new Lisp.Number(1), new Lisp.Number(1)]]
+    expression = [new Lisp.Var('+'),
+                    [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)],
+                    [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)]]
     evaluated = evalExpression expression
     expect(evaluated).toEqual new Lisp.Number 4

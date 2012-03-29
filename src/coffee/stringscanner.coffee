@@ -23,14 +23,15 @@ parseValue = (value) ->
   if value is 'true' then return Lisp.True
   if value is 'false' then return Lisp.False
   if value.charAt(0) is '\'' then return new Lisp.Symbol value.replace "'", ''
-  if value of GLOBALS then return GLOBALS[value] else return new Lisp.Arg value
   
-  throw 'Token not recognized!'
+  new Lisp.Var value
   
 evalExpression = (expression) ->
     if expression.type is 'JList'
-      procedure = expression.shift()
-      args = (evalExpression x for x in expression)
-      procedure(args)
+      evaluated = (evalExpression x for x in expression)
+      procedure = evaluated.shift()
+      procedure(evaluated)
+    else if expression.type is 'Variable'
+      GLOBALS[expression.value]
     else 
       expression 

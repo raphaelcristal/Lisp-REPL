@@ -2,9 +2,9 @@ Array::type = "JList"
 
 class Lisp
   
-Lisp.Arg = class
+Lisp.Var = class
   constructor: (@value) ->
-  type: 'Arg'
+  type: 'Variable'
     
 Lisp.Boolean = class
   constructor: (@value) ->
