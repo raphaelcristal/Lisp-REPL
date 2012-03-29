@@ -31,7 +31,7 @@ evalExpression = (expression) ->
       evaluated = (evalExpression x for x in expression)
       procedure = evaluated.shift()
       procedure(evaluated)
-    else if expression.type is 'Variable'
+    else if expression.type is 'Variable' and expression.value of GLOBALS
       GLOBALS[expression.value]
     else 
       expression 
