@@ -25,10 +25,15 @@ globalEnvironment.updateValues BUILTINS
   
 evalExpression = (expression, env=globalEnvironment) ->
     if expression.type is 'JList'
-      evaluated = (evalExpression x for x in expression)
-      procedure = evaluated.shift()
-      procedure(evaluated)
-    else if expression.type is 'Symbol' and expression.value of env
+      switch expression[0].value
+        when 'define'
+          [_, variable, expr] = expression 
+          env[variable.value] = evalExpression expr, env
+        else #run procedure
+          evaluated = (evalExpression x,env for x in expression)
+          procedure = evaluated.shift()
+          procedure(evaluated)
+    else if expression.type is 'Symbol'
       env[expression.value]
     else
       expression

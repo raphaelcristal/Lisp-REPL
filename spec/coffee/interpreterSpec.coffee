@@ -6,6 +6,11 @@ describe 'expression evalution', ->
                     [new Lisp.Symbol('+'), new Lisp.Number(1), new Lisp.Number(1)]]
     evaluated = evalExpression expression
     expect(evaluated).toEqual new Lisp.Number 4
+    
+  it 'should define a global variable', ->
+    expression = [new Lisp.Symbol('define'), new Lisp.Symbol('a'), new Lisp.Number(1)]
+    evalExpression expression
+    expect(globalEnvironment['a']).toEqual new Lisp.Number 1
 
 describe 'builtins', ->
   
