@@ -10,7 +10,7 @@ parseTokens = (tokens) ->
   token = tokens.shift()
   if token is '('
     expression = []
-    while tokens[0] isnt ')'
+    until tokens[0] is ')'
       expression.push parseTokens tokens
     tokens.shift()
     expression

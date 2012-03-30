@@ -10,10 +10,12 @@ BUILTINS =
   'cons': (x) -> new Lisp.Cons x[0], x[1]
 
 class Environment
-  costructor: (@parent=Null) ->
+  constructor: (parms=[], args=[], @parent=null) ->
+    for parm,index in parms
+      @[parm.value] = args[index]
     
   find: (value) ->
-    @ if value of @ else @parent.find value
+    if value of @ then @ else @parent.find value
   
   updateValues: (values) ->
     for key,value of values
@@ -29,12 +31,15 @@ evalExpression = (expression, env=globalEnvironment) ->
         when 'define'
           [_, variable, expr] = expression 
           env[variable.value] = evalExpression expr, env
+        when 'lambda'
+          [_, variables, expr] = expression
+          (args) -> evalExpression expr, new Environment variables, args, env
         else #run procedure
           evaluated = (evalExpression x,env for x in expression)
           procedure = evaluated.shift()
           procedure(evaluated)
     else if expression.type is 'Symbol'
-      env[expression.value]
+      env.find(expression.value)[expression.value]
     else
       expression
     

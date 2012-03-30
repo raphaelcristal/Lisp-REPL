@@ -8,9 +8,21 @@ describe 'expression evalution', ->
     expect(evaluated).toEqual new Lisp.Number 4
     
   it 'should define a global variable', ->
-    expression = [new Lisp.Symbol('define'), new Lisp.Symbol('a'), new Lisp.Number(1)]
+    expression = [new Lisp.Symbol('define'), new Lisp.Symbol('b'), new Lisp.Number(1)]
     evalExpression expression
-    expect(globalEnvironment['a']).toEqual new Lisp.Number 1
+    expect(globalEnvironment['b']).toEqual new Lisp.Number 1
+    
+  it 'should define a global lambda and evaluated it', ->
+    expression = [new Lisp.Symbol('define'), new Lisp.Symbol('myFunc')] 
+    lambdaExpr = [new Lisp.Symbol('lambda'), 
+                  [new Lisp.Symbol('a')],
+                  [new Lisp.Symbol('+'), new Lisp.Symbol('a'), new Lisp.Symbol('a')]]
+    expression.push lambdaExpr
+    evalExpression expression
+    args = [new Lisp.Number(1)]
+    expect(globalEnvironment['myFunc'](args)).toEqual new Lisp.Number 2
+   
+    
 
 describe 'builtins', ->
   
