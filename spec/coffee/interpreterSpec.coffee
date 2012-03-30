@@ -1,9 +1,9 @@
 describe 'expression evalution', ->
   
   it 'should evaluate a nested expression', ->
-    expression = [new Lisp.Var('+'),
-                    [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)],
-                    [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)]]
+    expression = [new Lisp.Symbol('+'),
+                    [new Lisp.Symbol('+'), new Lisp.Number(1), new Lisp.Number(1)],
+                    [new Lisp.Symbol('+'), new Lisp.Number(1), new Lisp.Number(1)]]
     evaluated = evalExpression expression
     expect(evaluated).toEqual new Lisp.Number 4
 

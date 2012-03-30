@@ -7,7 +7,6 @@ BUILTINS =
         args.reduce (a,b) -> new Lisp.Number a.value * b.value)
   '/': new Lisp.Procedure('/', (args) -> 
         args.reduce (a,b) -> new Lisp.Number a.value / b.value)
-  #'define': (x) -> globalEvironment[x[0].value]=x[1];return
   'cons': (x) -> new Lisp.Cons x[0], x[1]
 
 class Environment
@@ -29,7 +28,7 @@ evalExpression = (expression, env=globalEnvironment) ->
       evaluated = (evalExpression x for x in expression)
       procedure = evaluated.shift()
       procedure(evaluated)
-    else if expression.type is 'Variable' and expression.value of env
+    else if expression.type is 'Symbol' and expression.value of env
       env[expression.value]
     else
       expression

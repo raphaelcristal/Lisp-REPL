@@ -40,27 +40,24 @@ describe 'value parser', ->
     expect(parsed).toEqual new Lisp.Number 1
     
   it 'should parse a float', ->
-    parsed = parseValue 1.1
+    parsed = parseValue '1.1'
     expect(parsed).toEqual new Lisp.Number 1.1
     
-  it 'should parse symbol', ->
+  it 'should parse symbol with leading single quotation', ->
     parsed = parseValue "'abc"
     expect(parsed).toEqual new Lisp.Symbol 'abc'
-    
-  it 'should recognize variables', ->
-    tokens = ['+', '-', 'a', 'b']
-    parsed = (parseValue token for token in tokens)
-    for procedure in parsed
-      expect(procedure.type).toEqual 'Variable'
   
+  it 'should parse a variable as a Symbol', ->
+    parsed = parseValue 'abc'
+    expect(parsed).toEqual new Lisp.Symbol 'abc'
     
 describe 'token parser', ->
   
   it 'should recognize a nested expression', ->
     tokens = ['(', '+', '1', '(', '+', '1', '1', ')', ')']
     parsed = parseTokens tokens
-    expected = [new Lisp.Var('+'), new Lisp.Number(1),
-                [new Lisp.Var('+'), new Lisp.Number(1), new Lisp.Number(1)]]
+    expected = [new Lisp.Symbol('+'), new Lisp.Number(1),
+                [new Lisp.Symbol('+'), new Lisp.Number(1), new Lisp.Number(1)]]
     expect(parsed).toEqual expected
   
   it 'should recognize a list', ->

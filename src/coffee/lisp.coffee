@@ -8,10 +8,6 @@ Nil = class
 
 class Lisp
   
-Lisp.Var = class
-  constructor: (@value) ->
-  type: 'Variable'
-    
 Lisp.Boolean = class
   constructor: (@value) ->
   toString: -> if @value then '#t' else '#f'

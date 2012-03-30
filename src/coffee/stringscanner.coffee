@@ -24,13 +24,14 @@ parseTokens = (tokens) ->
     parseValue(token)
     
 parseValue = (value) ->
-  asNumber = Number(value)
-  if not isNaN asNumber then return new Lisp.Number asNumber
   if value is 'true' then return Lisp.True
   if value is 'false' then return Lisp.False
-  if value.charAt(0) is '\'' then return new Lisp.Symbol value.replace "'", ''
-  
-  new Lisp.Var value
+  if value is 'nil' then return Lisp.Nil
+  asNumber = Number value.replace /^'/, ''
+  if not isNaN asNumber
+    return new Lisp.Number asNumber 
+  else
+    return new Lisp.Symbol value.replace /^'/, '' 
 
 buildList = (values) ->
   if values.length is 0
