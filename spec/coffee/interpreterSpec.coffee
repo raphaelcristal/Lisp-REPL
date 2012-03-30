@@ -7,10 +7,24 @@ describe 'expression evalution', ->
     evaluated = evalExpression expression
     expect(evaluated).toEqual new Lisp.Number 4
 
-describe 'list builder', ->
+describe 'builtins', ->
   
-  it 'should build a nested list', ->
-    values = [1,2,3]
-    list = buildList values
-    expected = new Lisp.Cons(1,new Lisp.Cons(2,new Lisp.Cons(3, Lisp.Nil)))
-    expect(list).toEqual expected
+  it 'should add a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [1..10])
+    result = globalEnvironment['+'](numbers)
+    expect(result).toEqual new Lisp.Number 55
+    
+  it 'should subtract a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [10,2,1])
+    result = globalEnvironment['-'](numbers)
+    expect(result).toEqual new Lisp.Number 7
+    
+  it 'should multiply a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [1..10])
+    result = globalEnvironment['*'](numbers)
+    expect(result).toEqual new Lisp.Number 3628800
+    
+  it 'should divide a list of numbers', ->
+    numbers = (new Lisp.Number x for x in [100,5,2])
+    result = globalEnvironment['/'](numbers)
+    expect(result).toEqual new Lisp.Number 10

@@ -1,17 +1,38 @@
-evalExpression = (expression, env=GLOBALS) ->
+BUILTINS =
+  '+': new Lisp.Procedure('+', (args) -> 
+        args.reduce (a,b) -> new Lisp.Number a.value + b.value)
+  '-': new Lisp.Procedure('-', (args) -> 
+        args.reduce (a,b) -> new Lisp.Number a.value - b.value)
+  '*': new Lisp.Procedure('*', (args) -> 
+        args.reduce (a,b) -> new Lisp.Number a.value * b.value)
+  '/': new Lisp.Procedure('/', (args) -> 
+        args.reduce (a,b) -> new Lisp.Number a.value / b.value)
+  #'define': (x) -> globalEvironment[x[0].value]=x[1];return
+  'cons': (x) -> new Lisp.Cons x[0], x[1]
+
+class Environment
+  costructor: (@parent=Null) ->
+    
+  find: (value) ->
+    @ if value of @ else @parent.find value
+  
+  updateValues: (values) ->
+    for key,value of values
+      @[key] = value
+    
+
+globalEnvironment = new Environment
+globalEnvironment.updateValues BUILTINS
+  
+evalExpression = (expression, env=globalEnvironment) ->
     if expression.type is 'JList'
       evaluated = (evalExpression x for x in expression)
       procedure = evaluated.shift()
       procedure(evaluated)
-    else if expression.type is 'Variable' and expression.value of GLOBALS
-      GLOBALS[expression.value]
+    else if expression.type is 'Variable' and expression.value of env
+      env[expression.value]
     else
       expression
-
-buildList = (values) ->
-  if values.length is 0
-    return Lisp.Nil
-  else
-    return new Lisp.Cons values.shift(), buildList(values)
     
 window.evalExpression = evalExpression
+window.globalEnvironment = globalEnvironment

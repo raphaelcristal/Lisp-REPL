@@ -69,3 +69,11 @@ describe 'token parser', ->
     expected = new Lisp.Cons(new Lisp.Number(1), new Lisp.Cons(
                  new Lisp.Number(2), Lisp.Nil))
     expect(parsed).toEqual expected
+
+describe 'list builder', ->
+  
+  it 'should build a nested list', ->
+    values = [1,2,3]
+    list = buildList values
+    expected = new Lisp.Cons(1,new Lisp.Cons(2,new Lisp.Cons(3, Lisp.Nil)))
+    expect(list).toEqual expected

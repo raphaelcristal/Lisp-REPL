@@ -31,3 +31,9 @@ parseValue = (value) ->
   if value.charAt(0) is '\'' then return new Lisp.Symbol value.replace "'", ''
   
   new Lisp.Var value
+
+buildList = (values) ->
+  if values.length is 0
+    return Lisp.Nil
+  else
+    return new Lisp.Cons values.shift(), buildList(values)

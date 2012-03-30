@@ -45,23 +45,3 @@ Lisp.Symbol = class
 Lisp.True = new Lisp.Boolean true
 
 window.Lisp = Lisp
-
-GLOBALS =
-  '+': new Lisp.Procedure('+', (args) -> 
-        args.reduce (a,b) -> new Lisp.Number a.value + b.value)
-  '-': new Lisp.Procedure('-', (args) -> 
-        args.reduce (a,b) -> new Lisp.Number a.value - b.value)
-  '*': new Lisp.Procedure('*', (args) -> 
-        args.reduce (a,b) -> new Lisp.Number a.value * b.value)
-  '/': new Lisp.Procedure('/', (args) -> 
-        args.reduce (a,b) -> new Lisp.Number a.value / b.value)
-  'define': (x) -> GLOBALS[x[0].value]=x[1];return
-  'cons': (x) -> new Lisp.Cons x[0], x[1]
-
-  
-
-  
-
-  
-
-  
