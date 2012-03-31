@@ -1,3 +1,8 @@
+typeCheck = (functionName, args, type) ->
+  for arg,index in args 
+    if arg.type isnt type
+      throw "#{functionName}: expects type <#{type}> as #{index} argument, given: #{arg.type}"
+
 BUILTINS =
   '+': new Lisp.Procedure('+', (args) -> 
         args.reduce (a,b) -> new Lisp.Number a.value + b.value)
