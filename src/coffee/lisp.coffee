@@ -25,6 +25,7 @@ Lisp.Nil = new Nil
 Lisp.Number = class
   constructor: (@value) ->
   toString: -> "#{@value}"
+  valueOf: -> @value
   type: 'Number'
   
 Lisp.Procedure = (name, opt) ->

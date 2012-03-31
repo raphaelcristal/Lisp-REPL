@@ -7,6 +7,14 @@ BUILTINS =
         args.reduce (a,b) -> new Lisp.Number a.value * b.value)
   '/': new Lisp.Procedure('/', (args) -> 
         args.reduce (a,b) -> new Lisp.Number a.value / b.value)
+  '>': new Lisp.Procedure('>', (args) -> 
+        if args[0] > args[1] then Lisp.True else Lisp.False)
+  '>=': new Lisp.Procedure('>=', (args) -> 
+        if args[0] >= args[1] then Lisp.True else Lisp.False)
+  '<': new Lisp.Procedure('<', (args) -> 
+        if args[0] < args[1] then Lisp.True else Lisp.False)
+  '<=': new Lisp.Procedure('<=', (args) -> 
+        if args[0] <= args[1] then Lisp.True else Lisp.False)
   'cons': (x) -> new Lisp.Cons x[0], x[1]
 
 class Environment
@@ -33,7 +41,8 @@ evalExpression = (expression, env=globalEnvironment) ->
           env[variable.value] = evalExpression expr, env
         when 'lambda'
           [_, variables, expr] = expression
-          (args) -> evalExpression expr, new Environment variables, args, env
+          new Lisp.Procedure 'lambda',
+            (args) -> evalExpression expr, new Environment variables, args, env
         else #run procedure
           evaluated = (evalExpression x,env for x in expression)
           procedure = evaluated.shift()
