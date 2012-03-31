@@ -1,17 +1,18 @@
-KEYS = 
+KEYS =
   ENTER: 13
+  BACKSPACE: 8
   
 window.onload = =>
   inputArea = document.getElementById 'inputArea'
-  inputArea.onkeydown = checkInput
-  inputArea.onkeyup = newLine
+  inputArea.onkeydown = keyDown
+  inputArea.onkeyup = keyUp
   inputArea.focus()
   inputArea.setSelectionRange 2,2
   
-checkInput = (event) -> 
+keyDown = (event) ->
+  inputArea = document.getElementById 'inputArea'
   if event.keyCode is KEYS.ENTER
-    inputArea = document.getElementById 'inputArea'
-    lines = inputArea.value.split '\n' 
+    lines = inputArea.value.split '\n'
     lastLine = lines[lines.length-1]
     lastLine = lastLine.replace '\$ ', ''
     if lastLine is 'clear'
@@ -25,7 +26,14 @@ checkInput = (event) ->
     console.log result
     if result? then inputArea.value += '\n'+result.toString()
         
-newLine = (event) ->
+keyUp = (event) ->
+  inputArea = document.getElementById 'inputArea'
+  if event.keyCode is KEYS.BACKSPACE
+    if inputArea.selectionStart is 1
+      inputArea.value += ' '
+      inputArea.setSelectionRange 2,2
+    if inputArea.selectionStart is 0
+      inputArea.value += '$ '
+      inputArea.setSelectionRange 2,2
   if event.keyCode is KEYS.ENTER
-    inputArea = document.getElementById 'inputArea'
     inputArea.value += "$ "

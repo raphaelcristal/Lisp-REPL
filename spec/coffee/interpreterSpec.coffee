@@ -67,8 +67,8 @@ describe 'builtins', ->
     expect(evalExpression(expressionFalse)).toBe Lisp.False
   
   it 'should compare two values with lesser equals operator', ->
-    exprTrue1 = new Lisp.Symbol('<='), new Lisp.Number(2), new Lisp.Number(10)]
-    exprTrue2 = new Lisp.Symbol('<='), new Lisp.Number(10), new Lisp.Number(10)]
+    exprTrue1 = [new Lisp.Symbol('<='), new Lisp.Number(2), new Lisp.Number(10)]
+    exprTrue2 = [new Lisp.Symbol('<='), new Lisp.Number(10), new Lisp.Number(10)]
     expressionFalse = [new Lisp.Symbol('<='), new Lisp.Number(2), new Lisp.Number(1)]
     expect(evalExpression(exprTrue1)).toBe Lisp.True
     expect(evalExpression(exprTrue2)).toBe Lisp.True
