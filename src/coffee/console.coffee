@@ -10,6 +10,7 @@ window.onload = =>
   inputArea.setSelectionRange 2,2
   
 keyDown = (event) ->
+  console.log event.keyCode
   inputArea = document.getElementById 'inputArea'
   if event.keyCode is KEYS.ENTER
     lines = inputArea.value.split '\n'
