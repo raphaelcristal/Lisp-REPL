@@ -10,7 +10,6 @@ window.onload = =>
   inputArea.setSelectionRange 2,2
   
 keyDown = (event) ->
-  console.log event.keyCode
   inputArea = document.getElementById 'inputArea'
   if event.keyCode is KEYS.ENTER
     lines = inputArea.value.split '\n'
@@ -36,5 +35,5 @@ keyUp = (event) ->
     if inputArea.selectionStart is 0
       inputArea.value += '$ '
       inputArea.setSelectionRange 2,2
-  if event.keyCode is KEYS.ENTER
+  else if event.keyCode is KEYS.ENTER
     inputArea.value += "$ "
