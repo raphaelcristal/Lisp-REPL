@@ -105,4 +105,14 @@ describe 'builtins', ->
     expect(evalExpression(expressionTrue)).toBe Lisp.True
     expect(evalExpression(expressionFalse)).toBe Lisp.False
 
+  it 'should return the first element of a cons', ->
+    expression = [new Lisp.Symbol('first'),
+                   [new Lisp.Symbol('cons'), new Lisp.Number(1), new Lisp.Number(2)]]
+    expect(evalExpression(expression)).toEqual new Lisp.Number 1
+
+  it 'should return the rest of a cons', ->
+    expression = [new Lisp.Symbol('rest'),
+                   [new Lisp.Symbol('cons'), new Lisp.Number(1), new Lisp.Number(2)]]
+    expect(evalExpression(expression)).toEqual new Lisp.Number 2
+
     

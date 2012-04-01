@@ -24,7 +24,9 @@ BUILTINS =
         if args[0].type is 'Number'
           if args[0].value is args[1].value then return Lisp.True else return Lisp.False
         if args[0] is args[1] then Lisp.True else Lisp.False)
-  'cons': (x) -> new Lisp.Cons x[0], x[1]
+  'cons': new Lisp.Procedure('cons', (args) -> new Lisp.Cons args[0], args[1])
+  'first': new Lisp.Procedure('first', (args) -> args[0].first)
+  'rest': new Lisp.Procedure('rest', (args) -> args[0].rest)
 
 class Environment
   constructor: (parms=[], args=[], @parent=null) ->
