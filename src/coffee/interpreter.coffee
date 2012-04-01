@@ -52,6 +52,10 @@ evalExpression = (expression, env=globalEnvironment) ->
           [_, variables, expr] = expression
           new Lisp.Procedure 'lambda',
             (args) -> evalExpression expr, new Environment variables, args, env
+        when 'if'
+          [_, testExpr, ifExpr, elseExpr] = expression
+          expr = if evalExpression(testExpr) is Lisp.True then ifExpr else elseExpr
+          evalExpression expr
         else #run procedure
           evaluated = (evalExpression x,env for x in expression)
           procedure = evaluated.shift()

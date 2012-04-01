@@ -95,4 +95,14 @@ describe 'builtins', ->
     expect(evalExpression(exprTrue2)).toBe Lisp.True
     expect(evalExpression(expressionFalse)).toBe Lisp.False
 
+  it 'should evaluate if expressions', ->
+    expressionTrue = [new Lisp.Symbol('if'),
+                        [new Lisp.Symbol('eq?'), new Lisp.Number(2), new Lisp.Number(2)],
+                        Lisp.True, Lisp.False]
+    expressionFalse = [new Lisp.Symbol('if'),
+                        [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(2)],
+                        Lisp.True, Lisp.False]
+    expect(evalExpression(expressionTrue)).toBe Lisp.True
+    expect(evalExpression(expressionFalse)).toBe Lisp.False
+
     
