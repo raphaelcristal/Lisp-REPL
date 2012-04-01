@@ -1,25 +1,29 @@
 typeCheck = (functionName, args, type) ->
-  for arg,index in args 
+  for arg,index in args
     if arg.type isnt type
       throw "#{functionName}: expects type <#{type}> as #{index} argument, given: #{arg.type}"
 
 BUILTINS =
-  '+': new Lisp.Procedure('+', (args) -> 
+  '+': new Lisp.Procedure('+', (args) ->
         args.reduce (a,b) -> new Lisp.Number a.value + b.value)
-  '-': new Lisp.Procedure('-', (args) -> 
+  '-': new Lisp.Procedure('-', (args) ->
         args.reduce (a,b) -> new Lisp.Number a.value - b.value)
-  '*': new Lisp.Procedure('*', (args) -> 
+  '*': new Lisp.Procedure('*', (args) ->
         args.reduce (a,b) -> new Lisp.Number a.value * b.value)
-  '/': new Lisp.Procedure('/', (args) -> 
+  '/': new Lisp.Procedure('/', (args) ->
         args.reduce (a,b) -> new Lisp.Number a.value / b.value)
-  '>': new Lisp.Procedure('>', (args) -> 
+  '>': new Lisp.Procedure('>', (args) ->
         if args[0] > args[1] then Lisp.True else Lisp.False)
-  '>=': new Lisp.Procedure('>=', (args) -> 
+  '>=': new Lisp.Procedure('>=', (args) ->
         if args[0] >= args[1] then Lisp.True else Lisp.False)
-  '<': new Lisp.Procedure('<', (args) -> 
+  '<': new Lisp.Procedure('<', (args) ->
         if args[0] < args[1] then Lisp.True else Lisp.False)
-  '<=': new Lisp.Procedure('<=', (args) -> 
+  '<=': new Lisp.Procedure('<=', (args) ->
         if args[0] <= args[1] then Lisp.True else Lisp.False)
+  'eq?': new Lisp.Procedure('eq?', (args) ->
+        if args[0].type is 'Number'
+          if args[0].value is args[1].value then return Lisp.True else return Lisp.False
+        if args[0] is args[1] then Lisp.True else Lisp.False)
   'cons': (x) -> new Lisp.Cons x[0], x[1]
 
 class Environment
@@ -42,7 +46,7 @@ evalExpression = (expression, env=globalEnvironment) ->
     if expression.type is 'JList'
       switch expression[0].value
         when 'define'
-          [_, variable, expr] = expression 
+          [_, variable, expr] = expression
           env[variable.value] = evalExpression expr, env
         when 'lambda'
           [_, variables, expr] = expression

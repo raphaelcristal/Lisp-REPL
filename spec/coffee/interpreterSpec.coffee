@@ -73,3 +73,26 @@ describe 'builtins', ->
     expect(evalExpression(exprTrue1)).toBe Lisp.True
     expect(evalExpression(exprTrue2)).toBe Lisp.True
     expect(evalExpression(expressionFalse)).toBe Lisp.False
+
+  it 'should compare two numbers for equality', ->
+    expressionTrue = [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(1)]
+    expressionFalse = [new Lisp.Symbol('eq?'), new Lisp.Number(2), new Lisp.Number(1)]
+    expect(evalExpression(expressionTrue)).toBe Lisp.True
+    expect(evalExpression(expressionFalse)).toBe Lisp.False
+  
+  it 'should compare two cons for equality', ->
+    cons = new Lisp.Cons 1,2
+    expressionTrue = [new Lisp.Symbol('eq?'), cons, cons]
+    expressionFalse = [new Lisp.Symbol('eq?'), new Lisp.Cons(1,2), new Lisp.Cons(1,2)]
+    expect(evalExpression(expressionTrue)).toBe Lisp.True
+    expect(evalExpression(expressionFalse)).toBe Lisp.False
+
+  it 'should compare booleans for equality', ->
+    exprTrue1 = [new Lisp.Symbol('eq?'), Lisp.True, Lisp.True]
+    exprTrue2 = [new Lisp.Symbol('eq?'), Lisp.False, Lisp.False]
+    expressionFalse = [new Lisp.Symbol('eq?'), Lisp.True, Lisp.False]
+    expect(evalExpression(exprTrue1)).toBe Lisp.True
+    expect(evalExpression(exprTrue2)).toBe Lisp.True
+    expect(evalExpression(expressionFalse)).toBe Lisp.False
+
+    
