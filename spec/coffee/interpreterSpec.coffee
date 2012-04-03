@@ -13,14 +13,22 @@ describe 'expression evalution', ->
     expect(globalEnvironment['b']).toEqual new Lisp.Number 1
     
   it 'should define a global lambda and evaluated it', ->
-    expression = [new Lisp.Symbol('define'), new Lisp.Symbol('myFunc')] 
-    lambdaExpr = [new Lisp.Symbol('lambda'), 
+    expression = [new Lisp.Symbol('define'), new Lisp.Symbol('myFunc')]
+    lambdaExpr = [new Lisp.Symbol('lambda'),
                   [new Lisp.Symbol('a')],
                   [new Lisp.Symbol('+'), new Lisp.Symbol('a'), new Lisp.Symbol('a')]]
     expression.push lambdaExpr
     evalExpression expression
     args = [new Lisp.Number(1)]
     expect(globalEnvironment['myFunc'](args)).toEqual new Lisp.Number 2
+
+  it 'should define a globale lambda with alternative syntax and evaluate it', ->
+    expression = [new Lisp.Symbol('define'),
+                   [new Lisp.Symbol('plus'), new Lisp.Symbol('a')],
+                   [new Lisp.Symbol('+'), new Lisp.Symbol('a'), new Lisp.Symbol('a')]]
+    evalExpression expression
+    args = [new Lisp.Number(1)]
+    expect(globalEnvironment['plus'](args)).toEqual new Lisp.Number 2
    
     
 

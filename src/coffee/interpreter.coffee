@@ -49,7 +49,13 @@ evalExpression = (expression, env=globalEnvironment) ->
       switch expression[0].value
         when 'define'
           [_, variable, expr] = expression
-          env[variable.value] = evalExpression expr, env
+          if variable.type is 'JList'
+            #the alternative lambda syntax was used
+            name = variable.shift()
+            env[name.value] = new Lisp.Procedure name.value,
+              (args) -> evalExpression expr, new Environment variable, args, env
+          else
+            env[variable.value] = evalExpression expr, env
         when 'lambda'
           [_, variables, expr] = expression
           new Lisp.Procedure 'lambda',
