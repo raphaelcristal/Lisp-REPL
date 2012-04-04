@@ -17,12 +17,12 @@ build = (options) ->
   coffee = spawnInterpreter ['-c', '-o', 'src/js', 'src/coffee']
 
 test =   ->
-  spawnInterpreter ['-b', '-c', '-o', 'src/js', 'src/coffee']
-  spawnInterpreter ['-b', '-c', '-o', 'spec/js', 'spec/coffee']
+  spawnInterpreter ['-b', '-c', '-o', 'src/barejs', 'src/coffee']
+  spawnInterpreter ['-b', '-c', '-o', 'spec/barejs', 'spec/coffee']
 
 testWatch =   ->
-  spawnInterpreter ['-w', '-b', '-c', '-o', 'src/js', 'src/coffee']
-  spawnInterpreter ['-w', '-b', '-c', '-o', 'spec/js', 'spec/coffee']
+  spawnInterpreter ['-w', '-b', '-c', '-o', 'src/barejs', 'src/coffee']
+  spawnInterpreter ['-w', '-b', '-c', '-o', 'spec/barejs', 'spec/coffee']
 
 task 'build', 'compile and join sources', build
 task 'test', 'compile src so it can be tested with SpecRunner', test
