@@ -1,5 +1,7 @@
 src/js/*.js
+src/barejs/*.js
 spec/js/*.js
+spec/barejs/*.js
 .project
 lib/*
 *.swp

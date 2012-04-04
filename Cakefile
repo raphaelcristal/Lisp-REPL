@@ -14,7 +14,7 @@ spawnInterpreter = (options, callback) ->
   
 
 build = (options) ->
-  coffee = spawnInterpreter ['-j', 'src/js/combined.js', '-c', 'src/coffee']
+  coffee = spawnInterpreter ['-c', '-o', 'src/js', 'src/coffee']
 
 test =   ->
   spawnInterpreter ['-b', '-c', '-o', 'src/js', 'src/coffee']

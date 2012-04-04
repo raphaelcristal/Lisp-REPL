@@ -38,3 +38,7 @@ buildList = (values) ->
     return Lisp.Nil
   else
     return new Lisp.Cons values.shift(), buildList(values)
+
+#GLOBAL NAMESPACE
+window.tokenize = tokenize
+window.parseTokens = parseTokens
