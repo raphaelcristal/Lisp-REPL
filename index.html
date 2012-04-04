@@ -33,13 +33,9 @@
     </style>
   </head>
   <body>
-    <script type="text/javascript">
-      (function(){var f,i,g,h,j,k,l;f={"+":function(a){return a.reduce(function(a,c){return a+c})},"-":function(a){return a.reduce(function(a,c){return a-c})},"*":function(a){return a.reduce(function(a,c){return a*c})},"/":function(a){return a.reduce(function(a,c){return a/c})},define:function(a){f[a[0]]=a[1]}};window.onload=function(){var a;a=document.getElementById("inputArea");a.onkeydown=i;a.onkeyup=j;a.focus();return a.setSelectionRange(2,2)};i=function(a){var b;if(13===a.keyCode)if(a=document.getElementById("inputArea"),
-b=a.value.split("\n"),b=b[b.length-1],b=b.replace("$ ",""),"clear"===b)a.value="";else if(b=l(b),b=h(b),b=g(b),null!=b)return a.value+="\n"+b};j=function(a){if(13===a.keyCode)return a=document.getElementById("inputArea"),a.value+="$ "};l=function(a){var b,c,e,d,a=a.replace(/\(/g," ( "),a=a.replace(/\)/g," ) ");b=a.split(" ");d=[];c=0;for(e=b.length;c<e;c++)a=b[c],""!==a&&d.push(a);return d};h=function(a){var b;b=a.shift();if("("===b){for(b=[];")"!==a[0];)b.push(h(a));a.shift();return b}return k(b)};
-k=function(a){var b;b=Number(a);return isNaN(b)?a:b};g=function(a){var b;switch(typeof a){case "object":var c,e,d;d=[];c=0;for(e=a.length;c<e;c++)b=a[c],d.push(g(b));a=d.shift();return a(d);case "string":return a in f?f[a]:a;case "number":return a;default:throw"error";}}}).call(this);
-    </script>
     <div id='wrapper'>
       <textarea id='inputArea'>$ </textarea>
     </div>
+    <script src='compressed.js' type="text/javascript"></script>
   </body>
 </html>
