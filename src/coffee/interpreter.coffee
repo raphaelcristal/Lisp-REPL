@@ -78,3 +78,6 @@ evalExpression = (expression, env=globalEnvironment) ->
     
 window.evalExpression = evalExpression
 window.globalEnvironment = globalEnvironment
+window.resetGlobalEnvironment = ->
+  globalEnvironment = new Environment
+  globalEnvironment.updateValues BUILTINS

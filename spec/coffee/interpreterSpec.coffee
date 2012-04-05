@@ -1,5 +1,8 @@
 describe 'expression evalution', ->
   
+  beforeEach ->
+    resetGlobalEnvironment()
+
   it 'should evaluate a nested expression', ->
     expression = [new Lisp.Symbol('+'),
                     [new Lisp.Symbol('+'), new Lisp.Number(1), new Lisp.Number(1)],
@@ -31,13 +34,17 @@ describe 'expression evalution', ->
     expect(globalEnvironment['plus'](args)).toEqual new Lisp.Number 2
 
   it 'should throw an exception for an undefined identifier', ->
-    expression = [new Lisp.Symbol('djkfhsdjkfh')]
-    expect( -> evalExpression(expression)).toThrow new Error 'reference to undefined identifier: djkfhsdjkfh' 
+    expression = [new Lisp.Symbol('x')]
+    expect( -> evalExpression(expression)).toThrow new Error 'reference to undefined identifier: x'
    
     
 
 describe 'builtins', ->
   
+
+  it 'should reset the global environment for this suite', ->
+    resetGlobalEnvironment()
+
   it 'should add a list of numbers', ->
     numbers = (new Lisp.Number x for x in [1..10])
     result = globalEnvironment['+'](numbers)
