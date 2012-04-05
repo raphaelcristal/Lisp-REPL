@@ -29,6 +29,10 @@ describe 'expression evalution', ->
     evalExpression expression
     args = [new Lisp.Number(1)]
     expect(globalEnvironment['plus'](args)).toEqual new Lisp.Number 2
+
+  it 'should throw an exception for an undefined identifier', ->
+    expression = [new Lisp.Symbol('djkfhsdjkfh')]
+    expect( -> evalExpression(expression)).toThrow new Error 'reference to undefined identifier: djkfhsdjkfh' 
    
     
 

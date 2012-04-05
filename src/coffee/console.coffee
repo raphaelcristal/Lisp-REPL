@@ -27,9 +27,11 @@ keyDown = (event) ->
       tokens = tokenize completeExpression
       parsed = parseTokens tokens
       console.log parsed
-      result = evalExpression parsed
-      console.log result
-      if result? then inputArea.value += '\n'+result.toString()
+      try
+        result = evalExpression parsed
+        if result? then inputArea.value += '\n'+result.toString()
+      catch error
+        inputArea.value += '\n'+error.toString()
       expressionLines = []
       newLine = true
         

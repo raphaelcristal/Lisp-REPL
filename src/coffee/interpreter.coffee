@@ -34,7 +34,10 @@ class Environment
       @[parm.value] = args[index]
     
   find: (value) ->
-    if value of @ then @ else @parent.find value
+    try
+      if value of @ then @ else @parent.find value
+    catch error
+      throw "reference to undefined identifier: #{value}"
   
   updateValues: (values) ->
     for key,value of values
