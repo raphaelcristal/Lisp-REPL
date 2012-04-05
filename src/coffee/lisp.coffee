@@ -27,6 +27,11 @@ Lisp.Number = class
   toString: -> "#{@value}"
   valueOf: -> @value
   type: 'Number'
+
+Lisp.Quoted = class
+  constructor: (@value) ->
+  toString: -> "'#{@value}"
+  type: 'Quoted'
   
 Lisp.Procedure = (name, opt) ->
   opt.toString = -> "#<procedure:#{name}>"
@@ -36,7 +41,7 @@ Lisp.Procedure = (name, opt) ->
 Lisp.Symbol = class
   constructor: (value) ->
     @value = "#{value}"
-  toString: -> "'#{@value}"
+  toString: -> @value
   type: 'Symbol'
 
 Lisp.True = new Lisp.Boolean true

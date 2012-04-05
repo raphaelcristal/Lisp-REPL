@@ -33,8 +33,5 @@ describe 'Datatypes', ->
       
   it 'symbol', ->
     symbol1 = new Lisp.Symbol 'abcd'
-    symbol2 = new Lisp.Symbol '5'
     expect(symbol1.value).toEqual 'abcd'
-    expect(symbol2.value).toEqual '5'
-    expect(symbol1.toString()).toEqual '\'abcd'
-    expect(symbol2.toString()).toEqual '\'5'
+    expect(symbol1.toString()).toEqual 'abcd'

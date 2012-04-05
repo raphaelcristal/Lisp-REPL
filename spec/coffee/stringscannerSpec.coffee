@@ -43,9 +43,9 @@ describe 'value parser', ->
     parsed = parseValue '1.1'
     expect(parsed).toEqual new Lisp.Number 1.1
     
-  it 'should parse symbol with leading single quotation', ->
+  it 'should parse a quoted value', ->
     parsed = parseValue "'abc"
-    expect(parsed).toEqual new Lisp.Symbol 'abc'
+    expect(parsed).toEqual new Lisp.Quoted 'abc'
   
   it 'should parse a variable as a Symbol', ->
     parsed = parseValue 'abc'
@@ -61,10 +61,10 @@ describe 'token parser', ->
     expect(parsed).toEqual expected
   
   it 'should recognize a list', ->
-    tokens = ['\'(', '1', '2', ')']
+    tokens = ['\'(', '1', 'a', ')']
     parsed = parseTokens tokens
     expected = new Lisp.Cons(new Lisp.Number(1), new Lisp.Cons(
-                 new Lisp.Number(2), Lisp.Nil))
+                 new Lisp.Quoted('a'), Lisp.Nil))
     expect(parsed).toEqual expected
 
 describe 'list builder', ->
