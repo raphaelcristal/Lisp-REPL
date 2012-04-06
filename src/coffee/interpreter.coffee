@@ -35,7 +35,7 @@ class Environment
     
   find: (value) ->
     try
-      if value of @ then @ else @parent.find value
+      if value of @ then @[value] else @parent.find value
     catch error
       throw "reference to undefined identifier: #{value}"
   
@@ -72,7 +72,7 @@ evalExpression = (expression, env=globalEnvironment) ->
           procedure = evaluated.shift()
           procedure(evaluated)
     else if expression.type is 'Symbol'
-      env.find(expression.value)[expression.value]
+      env.find(expression.value)
     else
       expression
     
