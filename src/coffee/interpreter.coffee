@@ -50,6 +50,10 @@ BUILTINS =
             eval(ifBlock, env)
           else
             eval(elseBlock, env))
+  'let': new Lisp.Procedure('let', (args, env) ->
+            for x in args.shift()
+              env[x[0].value] = x[1]
+            eval args.shift(), env)
 
 class Environment
   constructor: (parms=[], args=[], @parent=null) ->
