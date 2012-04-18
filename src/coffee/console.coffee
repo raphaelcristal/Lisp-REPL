@@ -28,7 +28,7 @@ keyDown = (event) ->
       parsed = parseTokens tokens
       console.log parsed
       try
-        result = eval parsed
+        result = evalExpression parsed
         if result? then inputArea.value += '\n'+result.toString()
       catch error
         inputArea.value += '\n'+error.toString()

@@ -4,56 +4,29 @@ typeCheck = (functionName, args, type) ->
       throw "#{functionName}: expects type <#{type}> as #{index} argument, given: #{arg.type}"
 
 BUILTINS =
-  '+': new Lisp.Procedure('+', (args, env) ->
-        args.reduce (a,b) -> new Lisp.Number eval(a, env) + eval(b, env))
-  '-': new Lisp.Procedure('-', (args, env) ->
-        args.reduce (a,b) -> new Lisp.Number eval(a, env) - eval(b, env))
-  '*': new Lisp.Procedure('*', (args, env) ->
-        args.reduce (a,b) -> new Lisp.Number eval(a, env) * eval(b, env))
-  '/': new Lisp.Procedure('/', (args, env) ->
-        args.reduce (a,b) -> new Lisp.Number eval(a, env) / eval(b, env))
-  '>': new Lisp.Procedure('>', (args, env) ->
-        if eval(args[0], env) > eval(args[1], env) then Lisp.True else Lisp.False)
-  '>=': new Lisp.Procedure('>=', (args, env) ->
-        if eval(args[0], env) >= eval(args[1], env) then Lisp.True else Lisp.False)
-  '<': new Lisp.Procedure('<', (args, env) ->
-        if eval(args[0], env) < eval(args[1], env) then Lisp.True else Lisp.False)
-  '<=': new Lisp.Procedure('<=', (args, env) ->
-        if eval(args[0], env) <= eval(args[1], env) then Lisp.True else Lisp.False)
-  'eq?': new Lisp.Procedure('eq?', (args, env) ->
-        if eval(args[0], env).type is 'Number'
-          if eval(args[0], env).value is eval(args[1], env).value
-            return Lisp.True
-          else
-            return Lisp.False
-        if eval(args[0], env) is eval(args[1], env) then Lisp.True else Lisp.False)
-  'cons': new Lisp.Procedure('cons', (args, env) ->
-                                       new Lisp.Cons eval(args[0], env), eval(args[1], env))
-  'first': new Lisp.Procedure('first', (args, env) -> eval(args[0], env).first)
-  'rest': new Lisp.Procedure('rest', (args, env) -> eval(args[0], env).rest)
-  'define': new Lisp.Procedure('define', (args, env) ->
-              if args[0].type is 'JList'
-                #alternative lambda syntax
-                name = args[0].shift()
-                args.unshift new Lisp.Symbol('lambda')
-                args = [args]
-              else
-                name = args.shift()
-              env[name.value] = eval args[0], env)
-  'lambda': new Lisp.Procedure('lambda', (args, env) ->
-              [parms,body] = args
-              new Lisp.Procedure('UserDefined', (args) ->
-                eval body, new Environment parms,args,env))
-  'if': new Lisp.Procedure('if', (args, env) ->
-          [condition,ifBlock,elseBlock] = args
-          if eval(condition, env) is Lisp.True
-            eval(ifBlock, env)
-          else
-            eval(elseBlock, env))
-  'let': new Lisp.Procedure('let', (args, env) ->
-            for x in args.shift()
-              env[x[0].value] = x[1]
-            eval args.shift(), env)
+  '+': new Lisp.Procedure('+', (args) ->
+        args.reduce (a,b) -> new Lisp.Number a.value + b.value)
+  '-': new Lisp.Procedure('-', (args) ->
+        args.reduce (a,b) -> new Lisp.Number a.value - b.value)
+  '*': new Lisp.Procedure('*', (args) ->
+        args.reduce (a,b) -> new Lisp.Number a.value * b.value)
+  '/': new Lisp.Procedure('/', (args) ->
+        args.reduce (a,b) -> new Lisp.Number a.value / b.value)
+  '>': new Lisp.Procedure('>', (args) ->
+        if args[0] > args[1] then Lisp.True else Lisp.False)
+  '>=': new Lisp.Procedure('>=', (args) ->
+        if args[0] >= args[1] then Lisp.True else Lisp.False)
+  '<': new Lisp.Procedure('<', (args) ->
+        if args[0] < args[1] then Lisp.True else Lisp.False)
+  '<=': new Lisp.Procedure('<=', (args) ->
+        if args[0] <= args[1] then Lisp.True else Lisp.False)
+  'eq?': new Lisp.Procedure('eq?', (args) ->
+        if args[0].type is 'Number'
+          if args[0].value is args[1].value then return Lisp.True else return Lisp.False
+        if args[0] is args[1] then Lisp.True else Lisp.False)
+  'cons': new Lisp.Procedure('cons', (args) -> new Lisp.Cons args[0], args[1])
+  'first': new Lisp.Procedure('first', (args) -> args[0].first)
+  'rest': new Lisp.Procedure('rest', (args) -> args[0].rest)
 
 class Environment
   constructor: (parms=[], args=[], @parent=null) ->
@@ -73,17 +46,46 @@ class Environment
 
 globalEnvironment = new Environment
 globalEnvironment.updateValues BUILTINS
-  
-eval = (expression, env=globalEnvironment) ->
+
+evalExpression = (expression, env=globalEnvironment) ->
     if expression.type is 'JList'
-      procedure = eval expression.shift(), env
-      procedure expression, env
+      switch expression[0].value
+        when 'define'
+          [_, variable, expr] = expression
+          if variable.type is 'JList'
+            #the alternative lambda syntax was used
+            name = variable.shift()
+            env[name.value] = new Lisp.Procedure name.value,
+              (args) -> evalExpression expr, new Environment variable, args, env
+          else
+            env[variable.value] = evalExpression expr, env
+        when 'lambda'
+          [_, variables, expr] = expression
+          new Lisp.Procedure 'lambda',
+            (args) -> evalExpression expr, new Environment variables, args, env
+        when 'if'
+          [_, testExpr, ifExpr, elseExpr] = expression
+          expr = if evalExpression(testExpr,env) is Lisp.True then ifExpr else elseExpr
+          evalExpression expr, env
+        when 'let'
+          [_, tupels, expr] = expression
+          vars = []
+          vals = []
+          for x in tupels
+            vars.push x[0]
+            vals.push evalExpression x[1], env
+          evalExpression expr, new Environment vars, vals, env
+
+        else #run procedure
+          evaluated = (evalExpression x,env for x in expression)
+          procedure = evaluated.shift()
+          procedure(evaluated)
     else if expression.type is 'Symbol'
-      env.find expression.value
+      env.find(expression.value)
     else
       expression
-    
-window.eval = eval
+
+window.evalExpression = evalExpression
 window.globalEnvironment = globalEnvironment
 window.resetGlobalEnvironment = ->
   globalEnvironment = new Environment
