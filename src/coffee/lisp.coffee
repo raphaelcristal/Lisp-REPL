@@ -1,9 +1,15 @@
 Array::type = "JList"
 
+listToString = (list) ->
+  if list.rest is Lisp.Nil
+    list.first
+  else
+    "#{list.first} #{listToString(list.rest)}"
+
 Nil = class
   constructor: ->
     @value = null
-  toString: -> '()'
+  toString: -> '\'()'
   type: 'Nil'
 
 class Lisp
@@ -15,7 +21,11 @@ Lisp.Boolean = class
 
 Lisp.Cons = class
   constructor: (@first, @rest) ->
-  toString: -> "'(#{@first.toString()} . #{@rest.toString()})"
+  toString: -> if @.rest.type in ['Cons', 'Nil']
+                "'(#{listToString(@)})"
+               else
+                "'(#{@first.toString()} . #{@rest.toString()})"
+
   type: 'Cons'
 
 Lisp.False = new Lisp.Boolean false
