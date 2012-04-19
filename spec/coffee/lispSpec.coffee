@@ -35,3 +35,6 @@ describe 'Datatypes', ->
     symbol1 = new Lisp.Symbol 'abcd'
     expect(symbol1.value).toEqual 'abcd'
     expect(symbol1.toString()).toEqual 'abcd'
+
+  it 'symbol with equal values should have the same identity', ->
+    expect(new Lisp.Symbol('a')).toBe new Lisp.Symbol('a')

@@ -6,6 +6,16 @@ listToString = (list) ->
   else
     "#{list.first} #{listToString(list.rest)}"
 
+class Symbol
+  constructor: (value) ->
+    @value = "#{value}"
+  toString: -> @value
+  type: 'Symbol'
+
+class SymbolFactory
+  get: (s) -> if s of @ then @[s] else @[s] = new Symbol(s)
+symbolFactory = new SymbolFactory()
+
 Nil = class
   constructor: ->
     @value = null
@@ -14,7 +24,7 @@ Nil = class
 
 class Lisp
   
-Lisp.Boolean = class
+class Boolean
   constructor: (@value) ->
   toString: -> if @value then '#t' else '#f'
   type: 'Boolean'
@@ -28,7 +38,7 @@ Lisp.Cons = class
 
   type: 'Cons'
 
-Lisp.False = new Lisp.Boolean false
+Lisp.False = new Boolean false
 
 Lisp.Nil = new Nil
   
@@ -47,13 +57,9 @@ Lisp.Procedure = (name, opt) ->
   opt.toString = -> "#<procedure:#{name}>"
   opt.type = 'Procedure'
   opt
-  
-Lisp.Symbol = class
-  constructor: (value) ->
-    @value = "#{value}"
-  toString: -> @value
-  type: 'Symbol'
 
-Lisp.True = new Lisp.Boolean true
+Lisp.Symbol = (s) -> symbolFactory.get s
+
+Lisp.True = new Boolean true
 
 window.Lisp = Lisp
