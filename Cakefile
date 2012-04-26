@@ -11,7 +11,7 @@ spawnInterpreter = (options, callback) ->
     print data.toString()
   coffee.on 'exit', (code) ->
     callback?() if code is 0
-  
+
 
 build = (options) ->
   coffee = spawnInterpreter ['-c', '-o', 'src/js', 'src/coffee']
@@ -20,10 +20,11 @@ test =   ->
   spawnInterpreter ['-b', '-c', '-o', 'src/barejs', 'src/coffee']
   spawnInterpreter ['-b', '-c', '-o', 'spec/barejs', 'spec/coffee']
 
-testWatch =   ->
+watch =   ->
   spawnInterpreter ['-w', '-b', '-c', '-o', 'src/barejs', 'src/coffee']
   spawnInterpreter ['-w', '-b', '-c', '-o', 'spec/barejs', 'spec/coffee']
+  spawnInterpreter ['-w', '-c', '-o', 'src/js', 'src/coffee']
 
 task 'build', 'compile and join sources', build
 task 'test', 'compile src so it can be tested with SpecRunner', test
-task 'testWatch', 'compile tests on save', testWatch
+task 'watch', 'compile tests on save', watch
