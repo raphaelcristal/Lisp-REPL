@@ -1,11 +1,13 @@
 tokenize = (string) ->
+  #remove single line comments and whitespace
+  string = string.replace /;+.+\n|\n|\r|\t/g, ' '
   string = string.replace /\(/g, ' ( '
   string = string.replace /\)/g, ' ) '
   #preserve quotes
   string = string.replace /'\s+\(/g, '\'('
-  tokens = string.split(' ')
+  tokens = string.split ' '
   token for token in tokens when token isnt ''
-  
+
 parseTokens = (tokens) ->
   token = tokens.shift()
   if token is '('
@@ -18,7 +20,7 @@ parseTokens = (tokens) ->
     values = []
     until tokens[0] is ')'
       if tokens[0].charAt(0) isnt '\''
-        #make sure. that every value in the list 
+        #make sure. that every value in the list
         #is quoted if not a number
         tokens[0] = "'#{tokens[0]}"
       values.push parseTokens tokens
@@ -26,7 +28,7 @@ parseTokens = (tokens) ->
     buildList(values)
   else
     parseValue(token)
-    
+
 parseValue = (value) ->
   if value is 'true' then return Lisp.True
   if value is 'false' then return Lisp.False
