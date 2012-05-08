@@ -41,7 +41,7 @@ class Environment
 
   findEnvironment: (value) ->
     try
-      if value of @ then @ else @parent.find value
+      if value of @ then @ else @parent.findEnvironment value
     catch error
       throw "set!: cannot set variable before its definition: #{value}"
 
@@ -81,6 +81,10 @@ evalExpression = (expression, env=globalEnvironment) ->
             vars.push x[0]
             vals.push evalExpression x[1], env
           evalExpression expr, new Environment vars, vals, env
+        when 'set!'
+          [_, variable, value] = expression
+          targetEnvironment = env.findEnvironment variable
+          targetEnvironment[variable] = evalExpression value, env
 
         else #run procedure
           evaluated = (evalExpression x,env for x in expression)
