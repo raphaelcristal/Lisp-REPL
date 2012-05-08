@@ -85,6 +85,11 @@ evalExpression = (expression, env=globalEnvironment) ->
           [_, variable, value] = expression
           targetEnvironment = env.findEnvironment variable
           targetEnvironment[variable] = evalExpression value, env
+        when 'begin'
+          expressions = expression[1..]
+          results = for expr in expressions
+            evalExpression expr, env
+          results.pop()
 
         else #run procedure
           evaluated = (evalExpression x,env for x in expression)

@@ -67,4 +67,8 @@ describe 'evaluation of different test algorithms', ->
     result = run 'a'
     expect(result.toString()).toEqual '10'
 
+  it 'should execute a list of statements with begin', ->
+    result = run '(begin 5 4 3 2 1)'
+    expect(result.toString()).toEqual '1'
+
 
