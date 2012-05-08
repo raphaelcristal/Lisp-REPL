@@ -32,17 +32,23 @@ class Environment
   constructor: (parms=[], args=[], @parent=null) ->
     for parm,index in parms
       @[parm.value] = args[index]
-    
+
   find: (value) ->
     try
       if value of @ then @[value] else @parent.find value
     catch error
       throw "reference to undefined identifier: #{value}"
-  
+
+  findEnvironment: (value) ->
+    try
+      if value of @ then @ else @parent.find value
+    catch error
+      throw "set!: cannot set variable before its definition: #{value}"
+
   updateValues: (values) ->
     for key,value of values
       @[key] = value
-    
+
 
 globalEnvironment = new Environment
 globalEnvironment.updateValues BUILTINS
