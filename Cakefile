@@ -25,6 +25,6 @@ watch =   ->
   spawnInterpreter ['-w', '-b', '-c', '-o', 'spec/barejs', 'spec/coffee']
   spawnInterpreter ['-w', '-c', '-o', 'src/js', 'src/coffee']
 
-task 'build', 'compile and join sources', build
-task 'test', 'compile src so it can be tested with SpecRunner', test
+task 'build', 'compile sources', build
+task 'test', 'compile src and spec so it can be tested with SpecRunner', test
 task 'watch', 'compile tests on save', watch
