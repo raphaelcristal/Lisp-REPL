@@ -71,4 +71,14 @@ describe 'evaluation of different test algorithms', ->
     result = run '(begin 5 4 3 2 1)'
     expect(result.toString()).toEqual '1'
 
+  it 'should define an object and execute it\'s functions', ->
+    run '(define (make-point x y) (define (get-x) x) (define (get-y) y) (define (set-x! newX) (set! x newX)) (define (set-y! newY)
+         (set! y newY)) (define (area) (* x y)) (define (dispatch op) (if (eq? op \'get-x) get-x (if (eq? op \'get-y) get-y
+         (if (eq? op \'set-x!) set-x! (if (eq? op \'set-y!) set-y! (if (eq? op \'area) area -1)))))) dispatch)'
+    run '(define point (make-point 5 5))'
+    result = run '((point \'get-x))'
+    expect(result.toString()).toEqual '5'
+    run '((point \'set-x!) 10)'
+    result = run '((point \'get-x))'
+    expect(result.toString()).toEqual '10'
 
