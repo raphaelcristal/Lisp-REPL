@@ -34,6 +34,10 @@ BUILTINS =
   'cons': new Lisp.Procedure('cons', (args) -> new Lisp.Cons args[0], args[1])
   'first': new Lisp.Procedure('first', (args) -> args[0].first)
   'rest': new Lisp.Procedure('rest', (args) -> args[0].rest)
+  'last': new Lisp.Procedure('last', (args) ->
+                              check = (list) ->
+                                if list.rest is Lisp.Nil then list.first else check list.rest
+                              check args[0])
 
 class Environment
   constructor: (parms=[], args=[], @parent=null) ->

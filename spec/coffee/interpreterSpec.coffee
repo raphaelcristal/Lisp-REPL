@@ -158,5 +158,3 @@ describe 'builtins', ->
     expression = [new Lisp.Symbol('not'),
                   [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(1)]]
     expect(evalExpression(expression)).toEqual Lisp.False
-
-

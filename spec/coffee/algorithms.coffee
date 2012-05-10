@@ -71,6 +71,10 @@ describe 'evaluation of different test algorithms', ->
     result = run '(begin 5 4 3 2 1)'
     expect(result.toString()).toEqual '1'
 
+  it 'should return the last element of a list with last', ->
+    result = run '(last \'(3 2 1))'
+    expect(result.toString()).toEqual '1'
+
   it 'should define an object and execute it\'s functions', ->
     run '(define (make-point x y) (define (get-x) x) (define (get-y) y) (define (set-x! newX) (set! x newX)) (define (set-y! newY)
          (set! y newY)) (define (area) (* x y)) (define (dispatch op) (if (eq? op \'get-x) get-x (if (eq? op \'get-y) get-y
