@@ -21,7 +21,8 @@ BUILTINS =
   '<=': new Lisp.Procedure('<=', (args) ->
         if args[0] <= args[1] then Lisp.True else Lisp.False)
   'eq?': new Lisp.Procedure('eq?', (args) ->
-        if args[0].type is 'Number'
+        #TODO FIX QUOTED DATATYPE SO IN IS NOT NEEDED
+        if args[0].type in ['Number', 'Quoted']
           if args[0].value is args[1].value then return Lisp.True else return Lisp.False
         if args[0] is args[1] then Lisp.True else Lisp.False)
   'and': new Lisp.Procedure('and', (args) ->
@@ -63,14 +64,15 @@ evalExpression = (expression, env=globalEnvironment) ->
     if expression.type is 'JList'
       switch expression[0].value
         when 'define'
-          [_, variable, expr] = expression
+          [_, variable, expr...] = expression
           if variable.type is 'JList'
             #the alternative lambda syntax was used
-            name = variable.shift()
+            name = variable[0]
+            expr.unshift new Lisp.Symbol 'begin'
             env[name.value] = new Lisp.Procedure name.value,
-              (args) -> evalExpression expr, new Environment variable, args, env
+              (args) -> evalExpression expr, new Environment variable[1..], args, env
           else
-            env[variable.value] = evalExpression expr, env
+            env[variable.value] = evalExpression expr[0], env
         when 'lambda'
           [_, variables, expr] = expression
           new Lisp.Procedure 'lambda',

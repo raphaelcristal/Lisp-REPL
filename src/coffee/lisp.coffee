@@ -23,7 +23,7 @@ Nil = class
   type: 'Nil'
 
 class Lisp
-  
+
 class Boolean
   constructor: (@value) ->
   toString: -> if @value then '#t' else '#f'
@@ -41,7 +41,7 @@ Lisp.Cons = class
 Lisp.False = new Boolean false
 
 Lisp.Nil = new Nil
-  
+
 Lisp.Number = class
   constructor: (@value) ->
   toString: -> "#{@value}"
@@ -52,7 +52,7 @@ Lisp.Quoted = class
   constructor: (@value) ->
   toString: -> "'#{@value}"
   type: 'Quoted'
-  
+
 Lisp.Procedure = (name, opt) ->
   opt.toString = -> "#<procedure:#{name}>"
   opt.type = 'Procedure'
