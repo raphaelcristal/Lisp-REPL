@@ -28,6 +28,8 @@ BUILTINS =
           if args.every( (x) -> x is Lisp.True) then Lisp.True else Lisp.False)
   'or': new Lisp.Procedure('or', (args) ->
           if args.some( (x) -> x is Lisp.True) then Lisp.True else Lisp.False)
+  'not': new Lisp.Procedure('not', (args) ->
+          if args[0] is Lisp.True then Lisp.False else Lisp.True)
   'cons': new Lisp.Procedure('cons', (args) -> new Lisp.Cons args[0], args[1])
   'first': new Lisp.Procedure('first', (args) -> args[0].first)
   'rest': new Lisp.Procedure('rest', (args) -> args[0].rest)

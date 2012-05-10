@@ -154,4 +154,9 @@ describe 'builtins', ->
                   [new Lisp.Symbol('>'), new Lisp.Number(2), new Lisp.Number(1)]]
     expect(evalExpression(expression)).toEqual Lisp.True
 
+  it 'should evaluate a single boolean expression with not', ->
+    expression = [new Lisp.Symbol('not'),
+                  [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(1)]]
+    expect(evalExpression(expression)).toEqual Lisp.False
+
 
