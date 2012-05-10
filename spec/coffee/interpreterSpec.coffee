@@ -147,4 +147,11 @@ describe 'builtins', ->
                   [new Lisp.Symbol('<'), new Lisp.Number(2), new Lisp.Number(1)]]
     expect(evalExpression(expression)).toEqual Lisp.False
 
+  it 'should evaluate several booleans values with or', ->
+    expression = [new Lisp.Symbol('or'),
+                  [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(1)],
+                  [new Lisp.Symbol('<'), new Lisp.Number(2), new Lisp.Number(1)],
+                  [new Lisp.Symbol('>'), new Lisp.Number(2), new Lisp.Number(1)]]
+    expect(evalExpression(expression)).toEqual Lisp.True
+
 
