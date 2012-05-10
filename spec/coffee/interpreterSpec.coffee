@@ -133,3 +133,18 @@ describe 'builtins', ->
     expression = [new Lisp.Symbol('rest'),
                    [new Lisp.Symbol('cons'), new Lisp.Number(1), new Lisp.Number(2)]]
     expect(evalExpression(expression)).toEqual new Lisp.Number 2
+
+  it 'should evaluate several boolean true values with and', ->
+    expression = [new Lisp.Symbol('and'),
+                  [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(1)],
+                  [new Lisp.Symbol('<'), new Lisp.Number(1), new Lisp.Number(2)],
+                  [new Lisp.Symbol('>'), new Lisp.Number(2), new Lisp.Number(1)]]
+    expect(evalExpression(expression)).toEqual Lisp.True
+
+  it 'should evaluate false for and if one item is false', ->
+    expression = [new Lisp.Symbol('and'),
+                  [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(1)],
+                  [new Lisp.Symbol('<'), new Lisp.Number(2), new Lisp.Number(1)]]
+    expect(evalExpression(expression)).toEqual Lisp.False
+
+
