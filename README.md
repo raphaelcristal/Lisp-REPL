@@ -2,7 +2,7 @@ Lisp Interpreter written in CoffeeScript
 ========================================
 
 ### How to build
-Install node.js and npm. Then install CoffeeScript with *npm install -g coffee-script* and run:
+Install [nodejs](nodejs.org) and [npm](npmjs.org). Then install CoffeeScript with *npm install -g coffee-script* and run:
 
     cake build
 
@@ -26,7 +26,7 @@ The bottom window is the REPL, which takes a single expression as an input and e
 (define a 5)
 (define b '(1 2 3 4 5))
 (define plusOne (lambda (x) (+ x 1)))
-; alternative Syntex
+; alternative Syntax
 (define (plusOne x) (+ x 1))
 (plusOne 5)
 ```
@@ -38,30 +38,71 @@ Builtins
 
 Following is a list of supported datatypes. This list will be expanded as more datatypes are implemented
 
-* *Number* floating point number
+* **Number**: floating point number
 
-* *True* boolean true
+* **True**: boolean true
 
-* *False* boolean false
+* **False**: boolean false
 
-* *Nil* empty list
+* **Nil**: empty list
 
-* *Cons* a pair of values
+* **Cons**: a pair of values
 
-* *List* linked cons, terminates with empty list (nil)
+* **List**: linked cons, terminates with empty list (nil)
 
-* *Symbol*
+* **Symbol**: immutable string, there will be only one instace active of each Symbol during runtime, so that 'a and 'a are the same objects
 
 ### Mathematical Operators
 All functions can be used with an arbitrary number of arguments.
 
-* Plus: + ARGS*
-* Minus: - ARGS*
-* Multiply: * ARGS*
-* Divide: / ARGS*
+* **Plus**: + ARGS*
+* **Minus**: - ARGS*
+* **Multiply**: * ARGS*
+* **Divide**: / ARGS*
 
 *Examples*:
 ```Scheme
 (+ 1 2 3 4)
 (/ (+ 1 2) (- 1 2) (* (+ 1 1) (* 1 2)))
+```
+
+### Logical Operators
+
+TODO
+
+### Comparators
+
+* **eq**: eq? ARG1 ARG2
+* **lt**: < ARG1 ARG2
+* **gt**: > ARG1 ARG2
+* **le**: <= ARG1 ARG2
+* **ge**: >= ARG1 ARG2
+
+*Examples*:
+```Scheme
+(< 1 2 ) ;True
+(eq? 'a 'a) ;True
+(>= 1 2) ;False
+```
+
+### Evironment manipulation
+Assign a value to a variable with define:
+```Scheme
+; numeric value
+(define a 5)
+; lambda expression
+(define myFunc (lambda (x) (* x x)))
+; alternative lambda expression
+(define (myFunc x) (* x x))
+```
+
+Create a local variable with let:
+```Scheme
+(define (myFunc x) (let ((a 1) (b 2)) (* a b x)))
+```
+
+Set a value to an already defined variable:
+```Scheme
+(define a 5)
+(set! a 6)
 ```
