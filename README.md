@@ -39,17 +39,11 @@ Builtins
 Following is a list of supported datatypes. This list will be expanded as more datatypes are implemented
 
 * **Number**: floating point number
-
 * **True**: boolean true
-
 * **False**: boolean false
-
 * **Nil**: empty list
-
 * **Cons**: a pair of values
-
 * **List**: linked cons, terminates with empty list (nil)
-
 * **Symbol**: immutable string, there will be only one instace active of each Symbol during runtime, so that 'a and 'a are the same objects
 
 ### Mathematical Operators
@@ -68,7 +62,16 @@ All functions can be used with an arbitrary number of arguments.
 
 ### Logical Operators
 
-TODO
+* **and**: and ARGS*
+* **or**: or ARGS*
+* **not**: not ARG
+
+*Examples*:
+```Scheme
+(and true true false) ;false
+(or (eq? 1 1) (eq? 2 1) (eq? 'a 'a)) ;true
+(not (eq? 1 1)) ; false
+```
 
 ### Comparators
 
@@ -85,7 +88,25 @@ TODO
 (>= 1 2) ;False
 ```
 
+### Lists and Cons
+
+* **first**: first LIST/CONS
+* **rest**: rest LIST/CONS
+* **last**: last LIST
+
+*Examples*:
+```Scheme
+(define a '(1 2 3 4 5))
+(define b (cons 1 2))
+(first a) ; 1
+(first b) ; 1
+(rest a) ; '(2 3 4 5)
+(rest b) ; 2
+(last a) ; 5
+```
+
 ### Evironment manipulation
+
 Assign a value to a variable with define:
 ```Scheme
 ; numeric value
@@ -105,4 +126,22 @@ Set a value to an already defined variable:
 ```Scheme
 (define a 5)
 (set! a 6)
+```
+### Flow Control
+
+**if CONDITION TRUE-EXPRESSION FALSE-EXPRESSION**
+Executes TRUE-EXPRESSION and returns it's result if the condition is true.
+If the CONDITION is false the FALSE-EXPRESSION will be evaluated.
+```Scheme
+(if (eq? 1 1) (+ 1 1) (+ 2 2)); 2
+(if (eq? 1 2) (+ 1 1) (+ 2 2)); 4
+```
+
+**BEGIN EXPRESSION1 EXPRESSION2 ... **
+Evaluates all expressions in sequential order and returns the result of the last expression.
+The alternative lambda syntax has an implicit begin in it's body, so that it is possible to
+define objects.
+```Scheme
+(begin (+ 1 1) (+ 2 2) (+ 3 3)) ; 6
+(define (myFunc a b) (+ 1 1) (* a b))
 ```
