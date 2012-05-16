@@ -49,11 +49,13 @@ Following is a list of supported datatypes. This list will be expanded as more d
 ### Introspection ###
 
 * **type?**: type? ARG
+* **print**: print ARGS*
 
 *Examples*:
 ```Scheme
 (type? 5) ; 'Number
 (type? 'a) ; 'Symbol
+(print 5 ) ; 5
 ```
 
 ### Mathematical Operators ###

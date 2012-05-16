@@ -39,6 +39,8 @@ BUILTINS =
                               check = (list) ->
                                 if list.rest is Lisp.Nil then list.first else check list.rest
                               check args[0])
+  'print': new Lisp.Procedure('print', (args) ->
+            document.getElementById('console').value += args[0].toString();return)
 
 class Environment
   constructor: (parms=[], args=[], @parent=null) ->
