@@ -1,12 +1,12 @@
 Lisp Interpreter written in CoffeeScript
 ========================================
 
-### How to build
+### How to build ###
 Install [nodejs](nodejs.org) and [npm](npmjs.org). Then install CoffeeScript with *npm install -g coffee-script* and run:
 
     cake build
 
-### Tests
+### Tests ###
 To run the tests you will need the [Jasmine BDD Testframework](http://pivotal.github.com/jasmine/).
 Extract it to ./lib and run:
 
@@ -14,12 +14,12 @@ Extract it to ./lib and run:
 
 To execute the tests open SpecRunner.html.
 
-### How to use
+### How to use ###
 
 Open index.html after the project was built. The interface consists of two windows:
 The bottom window is the REPL, which takes a single expression as an input and evaluates it immediatly. The top window takes multiple expresssion as input and they will be evaluated as you click the _Parse_ button. After that you will be able to access your defined functions through the REPL. To clear the global environment and reset the interpreter, you can just reload the page.
 
-### Simple Examples
+### Simple Examples ###
 
 ```Scheme
 (+ 1 2 3 4)
@@ -34,7 +34,7 @@ The bottom window is the REPL, which takes a single expression as an input and e
 Builtins
 ========
 
-### Supported Datatypes
+### Supported Datatypes ###
 
 Following is a list of supported datatypes. This list will be expanded as more datatypes are implemented
 
@@ -46,7 +46,7 @@ Following is a list of supported datatypes. This list will be expanded as more d
 * **List**: linked cons, terminates with empty list (nil)
 * **Symbol**: immutable string, there will be only one instace active of each Symbol during runtime, so that 'a and 'a are the same objects
 
-### Mathematical Operators
+### Mathematical Operators ###
 All functions can be used with an arbitrary number of arguments.
 
 * **Plus**: + ARGS*
@@ -60,7 +60,7 @@ All functions can be used with an arbitrary number of arguments.
 (/ (+ 1 2) (- 1 2) (* (+ 1 1) (* 1 2)))
 ```
 
-### Logical Operators
+### Logical Operators ###
 
 * **and**: and ARGS*
 * **or**: or ARGS*
@@ -73,7 +73,7 @@ All functions can be used with an arbitrary number of arguments.
 (not (eq? 1 1)) ; false
 ```
 
-### Comparators
+### Comparators ###
 
 * **eq**: eq? ARG1 ARG2
 * **lt**: < ARG1 ARG2
@@ -88,7 +88,7 @@ All functions can be used with an arbitrary number of arguments.
 (>= 1 2) ;False
 ```
 
-### Lists and Cons
+### Lists and Cons ###
 
 * **first**: first LIST/CONS
 * **rest**: rest LIST/CONS
@@ -105,7 +105,7 @@ All functions can be used with an arbitrary number of arguments.
 (last a) ; 5
 ```
 
-### Evironment manipulation
+### Evironment manipulation ###
 
 Assign a value to a variable with define:
 ```Scheme
@@ -127,9 +127,9 @@ Set a value to an already defined variable:
 (define a 5)
 (set! a 6)
 ```
-### Flow Control
+### Flow Control ###
 
-**if CONDITION TRUE-EXPRESSION FALSE-EXPRESSION**
+#### if CONDITION TRUE-EXPRESSION FALSE-EXPRESSION ####
 Executes TRUE-EXPRESSION and returns it's result if the condition is true.
 If the CONDITION is false the FALSE-EXPRESSION will be evaluated.
 ```Scheme
@@ -137,7 +137,7 @@ If the CONDITION is false the FALSE-EXPRESSION will be evaluated.
 (if (eq? 1 2) (+ 1 1) (+ 2 2)); 4
 ```
 
-**BEGIN EXPRESSION1 EXPRESSION2 ... **
+#### BEGIN EXPRESSION1 EXPRESSION2 ... ####
 Evaluates all expressions in sequential order and returns the result of the last expression.
 The alternative lambda syntax has an implicit begin in it's body, so that it is possible to
 define objects.
