@@ -19,13 +19,9 @@ parseTokens = (tokens) ->
   else if token is '\'('
     values = []
     until tokens[0] is ')'
-      if tokens[0].charAt(0) isnt '\''
-        #make sure. that every value in the list
-        #is quoted if not a number
-        tokens[0] = "'#{tokens[0]}"
       values.push parseTokens tokens
     tokens.shift()
-    buildList(values)
+    new Lisp.Quoted buildList(values)
   else
     parseValue(token)
 
@@ -37,9 +33,9 @@ parseValue = (value) ->
   if not isNaN asNumber
     return new Lisp.Number asNumber
   else if value.charAt(0) is '\''
-    return new Lisp.Quoted value.replace /^'/, ''
+    return new Lisp.Quoted new Lisp.Symbol value.replace /^'/, ''
   else
-    return new Lisp.Symbol value.replace /^'/, ''
+    return new Lisp.Symbol value
 
 buildList = (values) ->
   if values.length is 0

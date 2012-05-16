@@ -50,7 +50,7 @@ describe 'value parser', ->
 
   it 'should parse a quoted value', ->
     parsed = parseValue "'abc"
-    expect(parsed).toEqual new Lisp.Quoted 'abc'
+    expect(parsed).toEqual new Lisp.Quoted new Lisp.Symbol 'abc'
 
   it 'should parse a variable as a Symbol', ->
     parsed = parseValue 'abc'
@@ -68,8 +68,8 @@ describe 'token parser', ->
   it 'should recognize a list', ->
     tokens = ['\'(', '1', 'a', ')']
     parsed = parseTokens tokens
-    expected = new Lisp.Cons(new Lisp.Number(1), new Lisp.Cons(
-                 new Lisp.Quoted('a'), Lisp.Nil))
+    expected = new Lisp.Quoted new Lisp.Cons(new Lisp.Number(1), new Lisp.Cons(
+                 new Lisp.Symbol('a'), Lisp.Nil))
     expect(parsed).toEqual expected
 
 describe 'list builder', ->

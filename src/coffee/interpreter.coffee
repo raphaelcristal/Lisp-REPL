@@ -21,8 +21,7 @@ BUILTINS =
   '<=': new Lisp.Procedure('<=', (args) ->
         if args[0] <= args[1] then Lisp.True else Lisp.False)
   'eq?': new Lisp.Procedure('eq?', (args) ->
-        #TODO FIX QUOTED DATATYPE SO IN IS NOT NEEDED
-        if args[0].type in ['Number', 'Quoted']
+        if args[0].type is 'Number'
           if args[0].value is args[1].value then return Lisp.True else return Lisp.False
         if args[0] is args[1] then Lisp.True else Lisp.False)
   'and': new Lisp.Procedure('and', (args) ->
@@ -95,8 +94,8 @@ evalExpression = (expression, env=globalEnvironment) ->
           evalExpression expr, new Environment vars, vals, env
         when 'set!'
           [_, variable, value] = expression
-          targetEnvironment = env.findEnvironment variable
-          targetEnvironment[variable] = evalExpression value, env
+          targetEnvironment = env.findEnvironment variable.value
+          targetEnvironment[variable.value] = evalExpression value, env
         when 'begin'
           expressions = expression[1..]
           (evalExpression expr, env for expr in expressions).pop()
@@ -107,6 +106,8 @@ evalExpression = (expression, env=globalEnvironment) ->
           procedure(evaluated)
     else if expression.type is 'Symbol'
       env.find(expression.value)
+    else if expression.type is 'Quoted'
+      expression.value
     else
       expression
 

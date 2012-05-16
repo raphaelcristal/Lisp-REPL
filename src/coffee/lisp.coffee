@@ -9,7 +9,7 @@ listToString = (list) ->
 class Symbol
   constructor: (value) ->
     @value = "#{value}"
-  toString: -> @value
+  toString: -> "'#{@value}"
   type: 'Symbol'
 
 class SymbolFactory
@@ -50,7 +50,6 @@ Lisp.Number = class
 
 Lisp.Quoted = class
   constructor: (@value) ->
-  toString: -> "'#{@value}"
   type: 'Quoted'
 
 Lisp.Procedure = (name, opt) ->
