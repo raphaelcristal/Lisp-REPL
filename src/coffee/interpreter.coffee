@@ -24,6 +24,8 @@ BUILTINS =
         if args[0].type is 'Number'
           if args[0].value is args[1].value then return Lisp.True else return Lisp.False
         if args[0] is args[1] then Lisp.True else Lisp.False)
+  'type?': new Lisp.Procedure('type?', (args) ->
+        new Lisp.Symbol args[0].type)
   'and': new Lisp.Procedure('and', (args) ->
           if args.every( (x) -> x is Lisp.True) then Lisp.True else Lisp.False)
   'or': new Lisp.Procedure('or', (args) ->

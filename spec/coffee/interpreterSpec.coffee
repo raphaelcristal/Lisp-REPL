@@ -158,3 +158,17 @@ describe 'builtins', ->
     expression = [new Lisp.Symbol('not'),
                   [new Lisp.Symbol('eq?'), new Lisp.Number(1), new Lisp.Number(1)]]
     expect(evalExpression(expression)).toEqual Lisp.False
+
+  it 'should determime the type with type?', ->
+    expression = [new Lisp.Symbol('type?'), new Lisp.Number(5)]
+    expect(evalExpression(expression)).toEqual new Lisp.Symbol 'Number'
+    expression = [new Lisp.Symbol('type?'), new Lisp.Quoted new Lisp.Symbol('a')]
+    expect(evalExpression(expression)).toEqual new Lisp.Symbol 'Symbol'
+    expression = [new Lisp.Symbol('type?'), new Lisp.Cons(1 , 2)]
+    expect(evalExpression(expression)).toEqual new Lisp.Symbol 'Cons'
+    expression = [new Lisp.Symbol('type?'), Lisp.True]
+    expect(evalExpression(expression)).toEqual new Lisp.Symbol 'Boolean'
+    expression = [new Lisp.Symbol('type?'), Lisp.False]
+    expect(evalExpression(expression)).toEqual new Lisp.Symbol 'Boolean'
+    expression = [new Lisp.Symbol('type?'), Lisp.Nil]
+    expect(evalExpression(expression)).toEqual new Lisp.Symbol 'Nil'

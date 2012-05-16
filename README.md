@@ -46,6 +46,16 @@ Following is a list of supported datatypes. This list will be expanded as more d
 * **List**: linked cons, terminates with empty list (nil)
 * **Symbol**: immutable string, there will be only one instace active of each Symbol during runtime, so that 'a and 'a are the same objects
 
+### Introspection ###
+
+* **type?**: type? ARG
+
+*Examples*:
+```Scheme
+(type? 5) ; 'Number
+(type? 'a) ; 'Symbol
+```
+
 ### Mathematical Operators ###
 All functions can be used with an arbitrary number of arguments.
 
