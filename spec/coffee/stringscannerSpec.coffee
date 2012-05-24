@@ -29,6 +29,14 @@ describe 'tokenizer', ->
     tokenized = tokenize '\'(1 2)'
     expect(tokenized).toEqual ['\'(', '1', '2', ')']
 
+  it 'should recognize a string', ->
+    tokenized = tokenize "\"abc\""
+    expect(tokenized).toEqual ["\"abc\""]
+
+  it 'should recognize a string with whitespaces', ->
+    tokenized = tokenize "\"a b c\""
+    expect(tokenized).toEqual ["\"a b c\""]
+
 
 describe 'value parser', ->
 
@@ -55,6 +63,10 @@ describe 'value parser', ->
   it 'should parse a variable as a Symbol', ->
     parsed = parseValue 'abc'
     expect(parsed).toEqual new Lisp.Symbol 'abc'
+
+  it 'should parse a string', ->
+    parsed = parseValue '"abc"'
+    expect(parsed).toEqual new Lisp.String 'abc'
 
 describe 'token parser', ->
 

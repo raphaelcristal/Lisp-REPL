@@ -44,6 +44,7 @@ Following is a list of supported datatypes. This list will be expanded as more d
 * **Nil**: empty list
 * **Cons**: a pair of values
 * **List**: linked cons, terminates with empty list (nil)
+* **String**: mutable string
 * **Symbol**: immutable string, there will be only one instace active of each Symbol during runtime, so that 'a and 'a are the same objects
 
 ### Introspection ###

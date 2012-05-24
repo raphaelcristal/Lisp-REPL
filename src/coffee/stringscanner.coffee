@@ -1,12 +1,14 @@
 tokenize = (string) ->
+  emptyString = /^\s*$/
   #remove single line comments and whitespace
   string = string.replace /;+.+\n|\n|\r|\t/g, ' '
   string = string.replace /\(/g, ' ( '
   string = string.replace /\)/g, ' ) '
   #preserve quotes
   string = string.replace /'\s+\(/g, '\'('
-  tokens = string.split ' '
-  token for token in tokens when token isnt ''
+  tokens = string.split /("[^"]+"|[^"\s]+)/g
+  #tokens = string.split ' '
+  token for token in tokens when not emptyString.test token
 
 parseTokens = (tokens) ->
   token = tokens.shift()
@@ -34,6 +36,8 @@ parseValue = (value) ->
     return new Lisp.Number asNumber
   else if value.charAt(0) is '\''
     return new Lisp.Quoted new Lisp.Symbol value.replace /^'/, ''
+  else if value.charAt(0) is '"'
+    return new Lisp.String value.slice 1, -1
   else
     return new Lisp.Symbol value
 

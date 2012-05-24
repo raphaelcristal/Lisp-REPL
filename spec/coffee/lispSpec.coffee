@@ -38,3 +38,8 @@ describe 'Datatypes', ->
 
   it 'symbol with equal values should have the same identity', ->
     expect(new Lisp.Symbol('a')).toBe new Lisp.Symbol('a')
+
+  it 'String', ->
+    string = new Lisp.String "abc"
+    expect(string.value).toEqual "abc"
+    expect(string.toString()).toEqual '"abc"'

@@ -57,6 +57,12 @@ Lisp.Procedure = (name, opt) ->
   opt.type = 'Procedure'
   opt
 
+Lisp.String = class
+  constructor: (@value) ->
+  toString: -> "\"#{@value}\""
+  valueOf: -> @value
+  type: 'String'
+
 Lisp.Symbol = (s) -> symbolFactory.get s
 
 Lisp.True = new Boolean true
