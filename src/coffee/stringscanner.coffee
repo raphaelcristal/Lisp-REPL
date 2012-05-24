@@ -7,7 +7,6 @@ tokenize = (string) ->
   #preserve quotes
   string = string.replace /'\s+\(/g, '\'('
   tokens = string.split /("[^"]+"|[^"\s]+)/g
-  #tokens = string.split ' '
   token for token in tokens when not emptyString.test token
 
 parseTokens = (tokens) ->
