@@ -41,11 +41,14 @@ loadCode = (e) ->
 
 saveCode = (e) ->
   if e.which is KEYS.ENTER
+    dropDown = $ '#dropdown'
     filename = $(@)
     code = $('#input').val()
     localStorage.setItem filename.val(), code
-    filename.val ''
     $('#save').popover 'hide'
+    dropDown.append "<li><a href='#'>#{filename.val()}</a></li>"
+    dropDown.children().click loadCode
+    filename.val ''
 
 splitExpression = ->
   expressions = $('#input').val()
