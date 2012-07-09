@@ -29,6 +29,15 @@ $ ->
   $('#save').click ->
     $(@).popover 'toggle'
     $('#filename').keydown saveCode
+  dropDown = $ '#dropdown'
+  for codeSnippet of localStorage
+    dropDown.append "<li><a href='#'>#{codeSnippet}</a></li>"
+  dropDown.children().click loadCode
+
+
+loadCode = (e) ->
+  code = localStorage.getItem @.firstChild.text
+  $('#input').val code
 
 saveCode = (e) ->
   if e.which is KEYS.ENTER
