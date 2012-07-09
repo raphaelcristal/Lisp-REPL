@@ -20,15 +20,26 @@ $ ->
   repl.keydown keyDown
   repl.keyup keyUp
   repl.mousedown mouseDown
+  $('#run').click splitExpression
+  $('#save').popover
+    placement: 'bottom'
+    title: 'Choose a name'
+    trigger: 'manual'
+    content: '<input type="text" id="filename">'
+  $('#save').click ->
+    $(@).popover 'toggle'
+    $('#filename').keydown saveCode
 
-
-  ###
-  parseButton = document.getElementById 'parse'
-  parseButton.onclick = splitExpression
-  ###
+saveCode = (e) ->
+  if e.which is KEYS.ENTER
+    filename = $(@)
+    code = $('#input').val()
+    localStorage.setItem filename.val(), code
+    filename.val ''
+    $('#save').popover 'hide'
 
 splitExpression = ->
-  expressions = document.getElementById('scriptInput').value
+  expressions = $('#input').val()
   k = 0
   expressionStart = 0
   openBrackets = 0
@@ -49,10 +60,6 @@ splitExpression = ->
   for expr in expressionList
     evalExpression parseTokens tokenize expr
   return
-
-
-
-# LISTENERS
 
 mouseDown = (e) ->
   repl = $ '#console'
