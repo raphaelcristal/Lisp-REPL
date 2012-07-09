@@ -1,8 +1,10 @@
 KEYS =
   BACKSPACE: 8
   ENTER: 13
+  CTRL: 17
   LEFT: 37
   UP: 38
+  C: 67
 
 
 $ ->
@@ -65,6 +67,7 @@ keyDown = do ->
   expressionLines = []
   expressionCache = []
   currentCacheIndex = 0
+  lastKey = undefined
   (e) ->
     newLine = false
     repl = $ '#console'
@@ -106,38 +109,20 @@ keyDown = do ->
             repl.val "#{history}\n#{error.toString()}"
           newLine = true
           expressionLines = []
+      when KEYS.C
+        if lastKey is KEYS.CTRL
+          e.preventDefault()
+          repl.val history + '\n> '
+          expressionLines = []
+    lastKey = e.which
 
-  ###
-  newLine = false
-  inputArea = document.getElementById 'console'
-  if event.keyCode is KEYS.ENTER
-    lines = inputArea.value.split '\n'
-    lastLine = lines[lines.length-1]
-    lastLine = lastLine.replace '\$ ', ''
-    if lastLine is 'clear'
-      inputArea.value = ''
-      return
-
-    expressionLines.push lastLine+' '
-    completeExpression = expressionLines.reduce (a,b) -> a + b
-    if isCommasBalanced completeExpression
-      tokens = tokenize completeExpression
-      parsed = parseTokens tokens
-      try
-        result = evalExpression parsed
-        if result? then inputArea.value += '\n'+result.toString()
-      catch error
-        inputArea.value += '\n'+error.toString()
-      expressionLines = []
-      newLine = true
-   ###
 keyUp = (e) ->
   repl = $ '#console'
-  if e.which is KEYS.ENTER and newLine
+  if newLine
     history = repl.val()
     repl.val history + '> '
 
 isBracketBalanced = (string) ->
   openingBrackets = string.split('(').length - 1
   closingBrackets = string.split(')').length - 1
-  openingBrackets is closingBrackets
+  openingBrackets <= closingBrackets
