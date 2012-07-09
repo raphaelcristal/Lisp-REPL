@@ -81,7 +81,7 @@ keyDown = do ->
         lastCache = expressionCache[currentCacheIndex]
         if lastCache
           lastLine = repl.val().split('\n').pop()
-          cache = "#{history.slice(0, history.lastIndexOf(lastLine))}> #{lastCache}"
+          cache = "#{history.slice(0, history.lastIndexOf(lastLine))}> #{lastCache.trim()}"
           repl.val cache
           currentCacheIndex -= 1
         e.preventDefault()
@@ -90,18 +90,22 @@ keyDown = do ->
       when KEYS.BACKSPACE
         checkForEnd()
       when KEYS.ENTER
-        newLine = true
         lastLine = repl.val().split('\n').pop()
         lastLine = lastLine.replace '> ', ''
-        expressionCache.push lastLine
-        currentCacheIndex = expressionCache.length - 1
-        tokens = tokenize lastLine
-        parsed = parseTokens tokens
-        try
-          result = evalExpression parsed
-          if result? then repl.val "#{history}\n#{result.toString()}"
-        catch error
-          repl.val "#{history}\n#{error.toString()}"
+        expressionLines.push lastLine+ ' '
+        completeExpression = expressionLines.reduce (a,b) -> a + b
+        if isBracketBalanced completeExpression
+          expressionCache.push completeExpression
+          currentCacheIndex = expressionCache.length - 1
+          tokens = tokenize completeExpression
+          parsed = parseTokens tokens
+          try
+            result = evalExpression parsed
+            if result? then repl.val "#{history}\n#{result.toString()}"
+          catch error
+            repl.val "#{history}\n#{error.toString()}"
+          newLine = true
+          expressionLines = []
 
   ###
   newLine = false
