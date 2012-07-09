@@ -1,18 +1,29 @@
 KEYS =
+  BACKSPACE: 8
   ENTER: 13
+  LEFT: 37
+  UP: 38
 
-window.onload = =>
-  scriptInput = document.getElementById 'scriptInput'
-  inputArea = document.getElementById 'console'
+
+$ ->
+  input = $ '#input'
+  repl = $ '#console'
+  navbar = $ '#navbar'
+  buttonGroup = $ '#button-group'
+  win = $ window
+  inputHeight = win.height() - (navbar.height() + buttonGroup.height()) - 50
+  input.height inputHeight
+  repl.height inputHeight
+  repl.val '> '
+  repl.keydown keyDown
+  repl.keyup keyUp
+  repl.mousedown mouseDown
+
+
+  ###
   parseButton = document.getElementById 'parse'
-  bodyHeight = document.body.offsetHeight
-  scriptInput.style.height = "#{bodyHeight/2}px"
-  inputArea.style.height = "#{bodyHeight/2}px"
   parseButton.onclick = splitExpression
-  inputArea.onkeydown = keyDown
-  inputArea.onkeyup = keyUp
-  inputArea.focus()
-  inputArea.setSelectionRange 2,2
+  ###
 
 splitExpression = ->
   expressions = document.getElementById('scriptInput').value
@@ -39,9 +50,60 @@ splitExpression = ->
 
 
 
-expressionLines = []
+# LISTENERS
+
+mouseDown = (e) ->
+  repl = $ '#console'
+  e.preventDefault()
+  textlength = repl.val().length
+  if not repl.is ':focus'
+    repl.setCursorPosition textlength, textlength
+
+
 newLine = false
-keyDown = (event) ->
+keyDown = do ->
+  expressionLines = []
+  expressionCache = []
+  currentCacheIndex = 0
+  (e) ->
+    newLine = false
+    repl = $ '#console'
+    history = repl.val()
+    checkForEnd = ->
+      position = repl.getCursorPosition()
+      if position <= 2 or history.slice(position-3, position) is '\n> '
+        e.preventDefault()
+
+    switch e.which
+      when KEYS.UP
+        if currentCacheIndex is -1
+          currentCacheIndex = expressionCache.length - 1
+        lastCache = expressionCache[currentCacheIndex]
+        if lastCache
+          lastLine = repl.val().split('\n').pop()
+          cache = "#{history.slice(0, history.lastIndexOf(lastLine))}> #{lastCache}"
+          repl.val cache
+          currentCacheIndex -= 1
+        e.preventDefault()
+      when KEYS.LEFT
+        checkForEnd()
+      when KEYS.BACKSPACE
+        checkForEnd()
+      when KEYS.ENTER
+        newLine = true
+        lastLine = repl.val().split('\n').pop()
+        lastLine = lastLine.replace '> ', ''
+        expressionCache.push lastLine
+        currentCacheIndex = expressionCache.length - 1
+        tokens = tokenize lastLine
+        parsed = parseTokens tokens
+        try
+          result = evalExpression parsed
+          if result? then repl.val "#{history}\n#{result.toString()}"
+        catch error
+          repl.val "#{history}\n#{error.toString()}"
+
+  ###
   newLine = false
   inputArea = document.getElementById 'console'
   if event.keyCode is KEYS.ENTER
@@ -64,13 +126,14 @@ keyDown = (event) ->
         inputArea.value += '\n'+error.toString()
       expressionLines = []
       newLine = true
+   ###
+keyUp = (e) ->
+  repl = $ '#console'
+  if e.which is KEYS.ENTER and newLine
+    history = repl.val()
+    repl.val history + '> '
 
-keyUp = (event) ->
-  inputArea = document.getElementById 'console'
-  if event.keyCode is KEYS.ENTER and newLine
-    inputArea.value += "$ "
-
-isCommasBalanced = (string) ->
-  openingCommas = string.split('(').length - 1
-  closingCommas = string.split(')').length - 1
-  openingCommas is closingCommas
+isBracketBalanced = (string) ->
+  openingBrackets = string.split('(').length - 1
+  closingBrackets = string.split(')').length - 1
+  openingBrackets is closingBrackets
