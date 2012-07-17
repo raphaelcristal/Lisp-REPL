@@ -1,6 +1,9 @@
 Lisp Interpreter written in CoffeeScript
 ========================================
 
+### Try it! ###
+[Lisp-REPL](http://pjuhri.github.com/Lisp-REPL/)
+
 ### How to build ###
 Install [nodejs](nodejs.org) and [npm](npmjs.org). Then install CoffeeScript with *npm install -g coffee-script* and run:
 
@@ -16,8 +19,10 @@ To execute the tests open SpecRunner.html.
 
 ### How to use ###
 
+This software has been tested with the latest versions of Chrome and Firefox. It may work in other browsers but it is not guaranteed.
+
 Open index.html after the project was built. The interface consists of two windows:
-The bottom window is the REPL, which takes a single expression as an input and evaluates it immediatly. The top window takes multiple expresssion as input and they will be evaluated as you click the _Parse_ button. After that you will be able to access your defined functions through the REPL. To clear the global environment and reset the interpreter, you can just reload the page.
+The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page.
 
 ### Simple Examples ###
 
