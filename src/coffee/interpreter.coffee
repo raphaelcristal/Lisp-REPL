@@ -40,7 +40,13 @@ BUILTINS =
                                 if list.rest is Lisp.Nil then list.first else check list.rest
                               check args[0])
   'print': new Lisp.Procedure('print', (args) ->
-            document.getElementById('console').value += args[0].toString();return)
+            repl = $ '#console'
+            if window.FIRST_PRINT
+              repl.val "#{repl.val()}\n#{args[0].toString()}"
+              window.FIRST_PRINT = false
+            else
+              repl.val "#{repl.val()}#{args[0].toString()}"
+            return)
 
 class Environment
   constructor: (parms=[], args=[], @parent=null) ->

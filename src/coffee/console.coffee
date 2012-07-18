@@ -140,8 +140,12 @@ keyUp = (e) ->
   if newLine
     history = repl.val()
     repl.val history + '> '
+    window.FIRST_PRINT = true
 
 isBracketBalanced = (string) ->
   openingBrackets = string.split('(').length - 1
   closingBrackets = string.split(')').length - 1
   openingBrackets <= closingBrackets
+
+# EXOPRTS
+window.FIRST_PRINT = true
