@@ -135,6 +135,14 @@ Assign a value to a variable with define:
 (define (myFunc x) (* x x))
 ```
 
+the short lambda define sytanx has also an implicit begin body and the result of the last expression
+will be assigned to the variable. Read the object.lisp example to see how
+this can help you with defining objects.
+```Scheme
+(define (myVar) (+ 1 2) (+ 2 3) (+ 5 5))
+(myVar) ; 10
+```
+
 Create a local variable with let:
 ```Scheme
 (define (myFunc x) (let ((a 1) (b 2)) (* a b x)))
