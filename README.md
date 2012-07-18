@@ -24,6 +24,13 @@ This software has been tested with the latest versions of Chrome and Firefox. It
 Open index.html after the project was built. The interface consists of two windows:
 The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page.
 
+The interactive console on the right supports a few keyboard shortcuts you can use
+
+* **UP** cycle through your last inputs
+* **CTRL+C** abort the current input
+
+The console also detects when your expression is complete by counting the brackets. So there is no need to enter your whole expression before you press enter. If you made a mistake just use CTRL+C to abort the current input.
+
 ### Simple Examples ###
 
 ```Scheme
