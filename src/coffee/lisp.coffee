@@ -6,65 +6,61 @@ listToString = (list) ->
   else
     "#{list.first} #{listToString(list.rest)}"
 
-class Symbol
+class LispSymbol
   constructor: (value) ->
     @value = "#{value}"
   toString: -> "'#{@value}"
   type: 'Symbol'
 
 class SymbolFactory
-  get: (s) -> if s of @ then @[s] else @[s] = new Symbol(s)
+  get: (s) -> if s of @ then @[s] else @[s] = new LispSymbol(s)
 symbolFactory = new SymbolFactory()
 
-Nil = class
+class LispNil
   constructor: ->
     @value = null
   toString: -> '\'()'
   type: 'Nil'
 
-class Lisp
-
-class Boolean
+class LispBoolean
   constructor: (@value) ->
   toString: -> if @value then '#t' else '#f'
   type: 'Boolean'
 
-Lisp.Cons = class
+class LispCons
   constructor: (@first, @rest) ->
   toString: -> if @.rest.type in ['Cons', 'Nil']
                 "'(#{listToString(@)})"
                else
                 "'(#{@first.toString()} . #{@rest.toString()})"
-
   type: 'Cons'
 
-Lisp.False = new Boolean false
-
-Lisp.Nil = new Nil
-
-Lisp.Number = class
+class LispNumber
   constructor: (@value) ->
   toString: -> "#{@value}"
   valueOf: -> @value
   type: 'Number'
 
-Lisp.Quoted = class
+class LispQuoted
   constructor: (@value) ->
   type: 'Quoted'
 
-Lisp.Procedure = (name, opt) ->
-  opt.toString = -> "#<procedure:#{name}>"
-  opt.type = 'Procedure'
-  opt
-
-Lisp.String = class
+class LispString
   constructor: (@value) ->
   toString: -> "\"#{@value}\""
   valueOf: -> @value
   type: 'String'
 
-Lisp.Symbol = (s) -> symbolFactory.get s
-
-Lisp.True = new Boolean true
-
-window.Lisp = Lisp
+window.Lisp =
+  Cons: LispCons
+  False: new LispBoolean false
+  Nil: new LispNil
+  Number: LispNumber
+  Procedure: (name, opt) ->
+    opt.toString = -> "#<procedure:#{name}>"
+    opt.type = 'Procedure'
+    opt
+  Quoted: LispQuoted
+  String: LispString
+  Symbol: (s) -> symbolFactory.get s
+  True: new LispBoolean true
