@@ -6,6 +6,11 @@ listToString = (list) ->
   else
     "#{list.first} #{listToString(list.rest)}"
 
+typeCheck = (functionName, args, type) ->
+  for arg,index in args
+    if arg.type isnt type
+      throw "#{functionName}: expects type <#{type}> as #{index+1} argument, given: #{arg.type}"
+
 class LispSymbol
   constructor: (value) ->
     @value = "#{value}"
@@ -56,10 +61,13 @@ window.Lisp =
   False: new LispBoolean false
   Nil: new LispNil
   Number: LispNumber
-  Procedure: (name, opt) ->
-    opt.toString = -> "#<procedure:#{name}>"
-    opt.type = 'Procedure'
-    opt
+  Procedure: (name, type, opt) ->
+    procedure = (args) ->
+      if type isnt 'Any' then typeCheck name, args, type
+      opt args
+    procedure.toString = -> "#<procedure:#{name}>"
+    procedure.type = 'Procedure'
+    procedure
   Quoted: LispQuoted
   String: LispString
   Symbol: (s) -> symbolFactory.get s
