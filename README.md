@@ -46,13 +46,13 @@ The console also detects when your expression is complete by counting the bracke
 
 The interpreter throws serveral exceptions:
 
-*"reference to undefined identifier: <identifier>"*
-There was no variable with the identifier <identifier>
+*"reference to undefined identifier: `<identifier>`"*
+There was no variable with the identifier `<identifier>`
 
-*"set!: cannot set variable before its definition: <identifier>"*
+*"set!: cannot set variable before its definition: `<identifier>`"*
 set! can only be used with an already defined variable
 
-*"<function>: expects type <type> as <index> argument, given: <type>"*
+*"`<function>`: expects type `<type>` as `<index>` argument, given: `<type>`"*
 the function was called with a wrong type, for example (+ 'a "b")
 
 Builtins
