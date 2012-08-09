@@ -32,6 +32,8 @@ $ ->
     for expression in expressions
       compiled += Compiler.compile parseTokens tokenize expression
       compiled += '\n'
+    #TODO FIX THIS PROPERLY, DIRTY HACK
+    compiled = compiled.replace /;{2,}/g, ';'
     input.val "#{input.val()}\n #{COMPILE_START_STRING}\n#{compiled}"
   $('#save').popover
     placement: 'bottom'

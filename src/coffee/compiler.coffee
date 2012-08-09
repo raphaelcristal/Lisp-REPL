@@ -1,3 +1,4 @@
+#TODO FIX SEMICOLON INSERTION
 functions =
   'cons': (ast) ->
     "[#{compile ast[0]}, #{compile ast[1]}]"
@@ -35,7 +36,10 @@ functions =
     if ast[0].type is 'JList'
       #alternative lambda syntax was used
       res = "var #{compile ast[0][0]} = function("
-      res += ast[0][1..].reduce (a,b) -> "#{compile a}, #{compile b}"
+      if ast[0][1..].length is 1
+        res += compile ast[0][1]
+      else
+        res += ast[0][1..].reduce (a,b) -> "#{compile a}, #{compile b}"
       res += ') { '
       ast[1..].forEach (item, index, array) ->
         if index is array.length-1
@@ -49,7 +53,12 @@ functions =
   'set!': (ast) ->
     "#{compile ast[0]} = #{compile ast[1]};"
   'lambda': (ast) ->
-    "function(#{ast[0].reduce (a,b) -> "#{compile a}, #{compile b}"}) " +
+    if ast[0].length is 1
+      parms = compile ast[0][0]
+    else
+      parms = ast[0].reduce (a,b) -> "#{compile a}, #{compile b}"
+    console.log parms
+    "function(#{parms}) " +
       "{ " +
         "return #{compile ast[1]};" +
       " }"
