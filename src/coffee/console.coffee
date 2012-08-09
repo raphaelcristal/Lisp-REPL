@@ -6,6 +6,7 @@ KEYS =
   UP: 38
   C: 67
 
+COMPILE_START_STRING = '*** GENERATED JAVASCRIPT ***'
 
 $ ->
   input = $ '#input'
@@ -20,7 +21,18 @@ $ ->
   repl.keydown keyDown
   repl.keyup keyUp
   repl.mousedown mouseDown
-  $('#run').click splitExpression
+  $('#run').click ->
+    expressions = splitExpression input.val()
+    for expression in expressions
+      evalExpression parseTokens tokenize expression
+    repl.val "#{repl.val()} ran #{expressions.length} statements\n> "
+  $('#compile').click ->
+    expressions = splitExpression input.val()
+    compiled = ""
+    for expression in expressions
+      compiled += Compiler.compile parseTokens tokenize expression
+      compiled += '\n'
+    input.val "#{input.val()}\n #{COMPILE_START_STRING}\n#{compiled}"
   $('#save').popover
     placement: 'bottom'
     title: 'Choose a name'
@@ -52,6 +64,8 @@ saveCode = (e) ->
 
 splitExpression = ->
   expressions = $('#input').val()
+  if expressions.indexOf(COMPILE_START_STRING) isnt -1
+    expressions = expressions.substring 0, expressions.indexOf COMPILE_START_STRING
   k = 0
   expressionStart = 0
   openBrackets = 0
@@ -69,10 +83,7 @@ splitExpression = ->
       expressionList.push expr
       openBrackets = 0
       closedBrackets = 0
-  for expr in expressionList
-    evalExpression parseTokens tokenize expr
-  repl = $ '#console'
-  repl.val "#{repl.val()} ran #{expressionList.length} statements\n> "
+  expressionList
 
 mouseDown = (e) ->
   repl = $ '#console'
