@@ -71,7 +71,8 @@ splitExpression = ->
       closedBrackets = 0
   for expr in expressionList
     evalExpression parseTokens tokenize expr
-  return
+  repl = $ '#console'
+  repl.val "#{repl.val()} ran #{expressionList.length} statements\n> "
 
 mouseDown = (e) ->
   repl = $ '#console'
