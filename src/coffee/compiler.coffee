@@ -11,7 +11,7 @@ functions =
   '/': (ast) ->
     "(#{ast.reduce (a,b) -> "#{compile a} / #{compile b}"})"
   'eq?': (ast) ->
-    "#{compile ast[0]} === #{compile ast[1]}"
+    "__EQ(#{compile ast[0]}, #{compile ast[1]})"
   '<': (ast) ->
     "(#{compile ast[0]} < #{compile ast[1]})"
   '>': (ast) ->

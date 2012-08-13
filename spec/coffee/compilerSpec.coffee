@@ -37,17 +37,17 @@ describe 'compiler', ->
     expect(run('(+ 1 1 (* 1 1))')).toEqual '(1 + 1 + (1 * 1))'
 
   it 'should compile the equals operator', ->
-    expect(run('(eq? 1 2)')).toEqual '1 === 2'
+    expect(run('(eq? 1 2)')).toEqual '__EQ(1, 2)'
 
   it 'should compile a logical not', ->
-    expect(run('(not (eq? 1 1))')).toEqual '!(1 === 1)'
+    expect(run('(not (eq? 1 1))')).toEqual '!(__EQ(1, 1))'
 
   it 'should compile a logical and', ->
     expect(run('(and true true false)')).toEqual '(true && true && false)'
 
   it 'should compile a logical or', ->
     expect(run('(or (eq? 1 1) (eq? 2 2) (eq? "a" "a"))'))
-      .toEqual '(1 === 1 || 2 === 2 || "a" === "a")'
+      .toEqual '(__EQ(1, 1) || __EQ(2, 2) || __EQ("a", "a"))'
 
   it 'should define a variable', ->
     expect(run('(define a 5)')).toEqual 'var a = 5;'
@@ -75,7 +75,7 @@ describe 'compiler', ->
     expect(run('(myFunction 1 2 3)')).toEqual 'myFunction(1, 2, 3)'
 
   it 'should compile an if-else expression', ->
-    expect(run('(if (eq? 1 1) (+ 1 1) (+ 2 2))')).toEqual '(1 === 1) ? (1 + 1) : (2 + 2)'
+    expect(run('(if (eq? 1 1) (+ 1 1) (+ 2 2))')).toEqual '(__EQ(1, 1)) ? (1 + 1) : (2 + 2)'
 
   it 'should compile print', ->
     expect(run('(print 5)')).toEqual 'console.log(5);'
