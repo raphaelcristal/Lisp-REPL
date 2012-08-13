@@ -4,22 +4,22 @@ describe 'compiler', ->
     Compiler.compile parseTokens tokenize expression
 
   it 'should compile a symbol to string', ->
-    expect(run('(myFunc \'a)')).toEqual 'myFunc("a");'
+    expect(run('(myFunc \'a)')).toEqual 'myFunc("a")'
 
   it 'should compile a cons', ->
     expect(run('(cons 1 2)')).toEqual '[1, 2]'
 
   it 'should compile a list', ->
-    expect(run('\'(1 2 3 4 5)')).toEqual '[1, 2, 3, 4, 5, null]'
+    expect(run('\'(1 2 3 4 5)')).toEqual '[1, 2, 3, 4, 5]'
 
   it 'should compile first', ->
-    expect(run('(first \'(1 2 3))')).toEqual '[1, 2, 3, null][0]'
+    expect(run('(first \'(1 2 3))')).toEqual '[1, 2, 3][0]'
 
   it 'should compile last', ->
-    expect(run('(last \'(1 2 3))')).toEqual '[1, 2, 3, null].slice(-2)[0]'
+    expect(run('(last \'(1 2 3))')).toEqual '[1, 2, 3].slice(-1)[0]'
 
   it 'should compile rest', ->
-    expect(run('(rest \'(1 2 3))')).toEqual '[1, 2, 3, null].slice(1)'
+    expect(run('(rest \'(1 2 3))')).toEqual '[1, 2, 3].slice(1)'
 
   it 'should compile an arithmetic expression with plus', ->
     expect(run('(+ 1 1 1)')).toEqual '(1 + 1 + 1)'
@@ -57,11 +57,11 @@ describe 'compiler', ->
 
   it 'should define a lambda', ->
     expect(run('(define plus (lambda (a b c) (+ a b c)))'))
-      .toEqual 'var plus = function(a, b, c) { return (a + b + c); };'
+      .toEqual 'var plus = function(a, b, c) {\n\treturn (a + b + c);\n};'
 
   it 'should define a lambda with alternative syntax', ->
     expect(run('(define (plus a b c) (+ c b a) (+ a b c))'))
-      .toEqual 'var plus = function(a, b, c) { (c + b + a); return (a + b + c); };'
+      .toEqual 'var plus = function(a, b, c) {\n\t(c + b + a);\n\treturn (a + b + c);\n};'
 
   it 'should compile multiple expressions with begin', ->
     expect(run('(begin (+ 1 2) (+ 3 4) (+ 5 6))'))
@@ -72,7 +72,7 @@ describe 'compiler', ->
       .toEqual '(function() { var a = 5; var b = 10; return (a + b); })()'
 
   it 'should make a non builtin function call', ->
-    expect(run('(myFunction 1 2 3)')).toEqual 'myFunction(1, 2, 3);'
+    expect(run('(myFunction 1 2 3)')).toEqual 'myFunction(1, 2, 3)'
 
   it 'should compile an if-else expression', ->
     expect(run('(if (eq? 1 1) (+ 1 1) (+ 2 2))')).toEqual '(1 === 1) ? (1 + 1) : (2 + 2)'

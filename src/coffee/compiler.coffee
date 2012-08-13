@@ -31,7 +31,7 @@ functions =
   'rest': (ast) ->
     "#{compile ast[0]}.slice(1)"
   'last': (ast) ->
-    "#{compile ast[0]}.slice(-2)[0]"
+    "#{compile ast[0]}.slice(-1)[0]"
   'define': (ast) ->
     if ast[0].type is 'JList'
       #alternative lambda syntax was used
@@ -40,13 +40,13 @@ functions =
         res += compile ast[0][1]
       else
         res += ast[0][1..].reduce (a,b) -> "#{compile a}, #{compile b}"
-      res += ') { '
+      res += ') {\n'
       ast[1..].forEach (item, index, array) ->
         if index is array.length-1
-          res += "return #{compile item};"
+          res += "\treturn #{compile item};\n"
         else
-          res += "#{compile item}; "
-      res += ' };'
+          res += "\t#{compile item};\n"
+      res += '};'
       res
     else
       "var #{compile ast[0]} = #{compile ast[1]};"
@@ -57,11 +57,10 @@ functions =
       parms = compile ast[0][0]
     else
       parms = ast[0].reduce (a,b) -> "#{compile a}, #{compile b}"
-    console.log parms
     "function(#{parms}) " +
-      "{ " +
-        "return #{compile ast[1]};" +
-      " }"
+      "{\n" +
+        "\treturn #{compile ast[1]};\n" +
+      "}"
   'begin': (ast) ->
     res = "(function() { "
     res += ast.reduce (a,b,i,c) ->
@@ -85,7 +84,7 @@ buildArray = (cons) ->
   if cons.rest.type isnt 'Nil'
     "#{compile cons.first}, #{buildArray cons.rest}"
   else
-    "#{compile cons.first}, #{compile cons.rest}"
+    "#{compile cons.first}"
 
 compile = (ast) ->
   switch ast.type
@@ -95,9 +94,9 @@ compile = (ast) ->
       else
         rest = ast[1..]
         if rest.length is 1
-          "#{compile ast[0]}(#{compile rest[0]});"
+          "#{compile ast[0]}(#{compile rest[0]})"
         else
-          "#{compile ast[0]}(#{ast[1..].reduce (a,b) -> "#{compile a}, #{compile b}"});"
+          "#{compile ast[0]}(#{ast[1..].reduce (a,b) -> "#{compile a}, #{compile b}"})"
     when 'Symbol'
       ast.toString().slice 1
     when 'Boolean'
@@ -111,7 +110,7 @@ compile = (ast) ->
       else
         compile ast.value
     when 'Nil'
-      null
+      '[]'
     else
       ast.toString()
 
