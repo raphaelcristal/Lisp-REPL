@@ -11,4 +11,3 @@ window.__EQ = (a, b) ->
     arrayEquals a, b
   else
     a is b
-
