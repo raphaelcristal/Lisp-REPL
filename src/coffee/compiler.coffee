@@ -1,7 +1,7 @@
 #TODO FIX SEMICOLON INSERTION
 functions =
   'cons': (ast) ->
-    "[#{compile ast[0]}, #{compile ast[1]}]"
+    "[].concat(#{compile ast[0]}, #{compile ast[1]})"
   '+': (ast) ->
     "(#{ast.reduce (a,b) -> "#{compile a} + #{compile b}"})"
   '-': (ast) ->
