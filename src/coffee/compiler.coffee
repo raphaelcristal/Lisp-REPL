@@ -36,10 +36,17 @@ functions =
     if ast[0].type is 'JList'
       #alternative lambda syntax was used
       res = "var #{compile ast[0][0]} = function("
-      if ast[0][1..].length is 1
+      #contains the function name and parameters
+      tmp = ast[0][1..]
+      #no parameters given
+      if tmp.length is 0
+        compile ast[0][0]
+      #only one parameter, no reduce required
+      else if tmp.length is 1
         res += compile ast[0][1]
+      #multiple parameters
       else
-        res += ast[0][1..].reduce (a,b) -> "#{compile a}, #{compile b}"
+        res += tmp.reduce (a,b) -> "#{compile a}, #{compile b}"
       res += ') {\n'
       ast[1..].forEach (item, index, array) ->
         if index is array.length-1
@@ -53,10 +60,13 @@ functions =
   'set!': (ast) ->
     "#{compile ast[0]} = #{compile ast[1]};"
   'lambda': (ast) ->
-    if ast[0].length is 1
+    if ast[0].length is 0
+      parms = ''
+    else if ast[0].length is 1
       parms = compile ast[0][0]
-    else
+    else if ast[0].length > 1
       parms = ast[0].reduce (a,b) -> "#{compile a}, #{compile b}"
+
     "function(#{parms}) " +
       "{\n" +
         "\treturn #{compile ast[1]};\n" +
@@ -93,7 +103,9 @@ compile = (ast) ->
         functions[ast[0].value](ast[1..])
       else
         rest = ast[1..]
-        if rest.length is 1
+        if rest.length is 0
+          "(#{compile ast[0]})"
+        else if rest.length is 1
           "#{compile ast[0]}(#{compile rest[0]})"
         else
           "#{compile ast[0]}(#{ast[1..].reduce (a,b) -> "#{compile a}, #{compile b}"})"
