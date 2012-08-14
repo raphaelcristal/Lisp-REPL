@@ -7,7 +7,7 @@ describe 'compiler', ->
     expect(run('(myFunc \'a)')).toEqual 'myFunc("a")'
 
   it 'should compile a cons', ->
-    expect(run('(cons 1 2)')).toEqual '[1, 2]'
+    expect(run('(cons 1 2)')).toEqual '[].concat(1, 2)'
 
   it 'should compile a list', ->
     expect(run('\'(1 2 3 4 5)')).toEqual '[1, 2, 3, 4, 5]'
