@@ -103,7 +103,7 @@ compile = (ast) ->
       else
         rest = ast[1..]
         if rest.length is 0
-          "(#{compile ast[0]})"
+          "#{compile ast[0]}()"
         else if rest.length is 1
           "#{compile ast[0]}(#{compile rest[0]})"
         else
