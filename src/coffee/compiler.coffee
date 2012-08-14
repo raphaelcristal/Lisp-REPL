@@ -71,17 +71,17 @@ functions =
         "\treturn #{compile ast[1]};\n" +
       "}"
   'begin': (ast) ->
-    res = "(function() { "
+    res = "(function() {\n"
     console.log ast.length
     if ast.length is 1
-      res += "return #{compile ast[0]};"
+      res += "\treturn #{compile ast[0]};\n"
     else
       res += ast.reduce (a,b,i,c) ->
         if i is c.length-1
-          "#{compile a}; return #{compile b};"
+          "\t#{compile a};\n\treturn #{compile b};"
         else
-          "#{compile a}; #{compile b}"
-    res += " })();"
+          "#{compile a};\n\t#{compile b}"
+    res += "\n})();"
   'if': (ast) ->
     "(#{compile ast[0]}) ? #{compile ast[1]} : #{compile ast[2]}"
   'print': (ast) ->

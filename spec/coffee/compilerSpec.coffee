@@ -65,7 +65,7 @@ describe 'compiler', ->
 
   it 'should compile multiple expressions with begin', ->
     expect(run('(begin (+ 1 2) (+ 3 4) (+ 5 6))'))
-      .toEqual '(function() { (1 + 2); (3 + 4); return (5 + 6); })();'
+      .toEqual '(function() {\n\t(1 + 2);\n\t(3 + 4);\n\treturn (5 + 6);\n})();'
 
   it 'should create local variables with let', ->
     expect(run('(let ((a 5) (b 10)) (+ a b))'))
