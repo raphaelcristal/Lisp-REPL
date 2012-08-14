@@ -1,4 +1,3 @@
-#TODO FIX SEMICOLON INSERTION
 functions =
   'cons': (ast) ->
     "[].concat(#{compile ast[0]}, #{compile ast[1]})"

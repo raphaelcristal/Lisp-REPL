@@ -1,5 +1,6 @@
 KEYS =
   BACKSPACE: 8
+  TAB: 9
   ENTER: 13
   CTRL: 17
   LEFT: 37
@@ -43,6 +44,12 @@ $ ->
   $('#save').click ->
     $(@).popover 'toggle'
     $('#filename').keydown saveCode
+  input.keydown (e) ->
+    if e.which is KEYS.TAB
+      e.preventDefault()
+      old = input.val()
+      currentPosition = input.getCursorPosition()
+      input.val old.slice(0,currentPosition) + '\t' + old.slice(currentPosition)
   dropDown = $ '#dropdown'
   for codeSnippet of localStorage
     dropDown.append "<li><a href='#'>#{codeSnippet}</a></li>"
