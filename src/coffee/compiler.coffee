@@ -72,11 +72,15 @@ functions =
       "}"
   'begin': (ast) ->
     res = "(function() { "
-    res += ast.reduce (a,b,i,c) ->
-      if i is c.length-1
-        "#{compile a}; return #{compile b};"
-      else
-        "#{compile a}; #{compile b}"
+    console.log ast.length
+    if ast.length is 1
+      res += "return #{compile ast[0]};"
+    else
+      res += ast.reduce (a,b,i,c) ->
+        if i is c.length-1
+          "#{compile a}; return #{compile b};"
+        else
+          "#{compile a}; #{compile b}"
     res += " })();"
   'if': (ast) ->
     "(#{compile ast[0]}) ? #{compile ast[1]} : #{compile ast[2]}"
