@@ -4,6 +4,9 @@ Lisp Interpreter written in CoffeeScript
 ### Try it! ###
 [Lisp-REPL](http://pjuhri.github.com/Lisp-REPL/)
 
+[Video Tutorial](http://youtu.be/o-cqbVpyqSA)
+Change quality to HD!
+
 ### How to build ###
 Install [nodejs](nodejs.org) and [npm](npmjs.org). Then install CoffeeScript with *npm install -g coffee-script* and run:
 
@@ -38,7 +41,7 @@ then open SpecRunner.html.
 This software has been tested with the latest versions of **Chrome** and **Firefox**. It may work in other browsers but it is not guaranteed.
 
 Open index.html after the project was built. The interface consists of two windows:
-The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page.
+The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page. The _Compile_ Button will compile your Lisp to Javscript. You can find more information about the compiler [here](#BLA).
 
 The interactive console on the right supports a few keyboard shortcuts you can use
 
@@ -206,3 +209,6 @@ define objects.
 (begin (+ 1 1) (+ 2 2) (+ 3 3)) ; 6
 (define (myFunc a b) (+ 1 1) (* a b))
 ```
+
+
+# Experimental Lisp to Javascript Compiler #
