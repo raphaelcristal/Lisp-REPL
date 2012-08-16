@@ -53,7 +53,7 @@ describe 'compiler', ->
     expect(run('(define a 5)')).toEqual 'var a = 5;'
 
   it 'should compile set', ->
-    expect(run('(set! a 5)')).toEqual 'a = 5;'
+    expect(run('(set! a 5)')).toEqual 'a = 5'
 
   it 'should define a lambda', ->
     expect(run('(define plus (lambda (a b c) (+ a b c)))'))
