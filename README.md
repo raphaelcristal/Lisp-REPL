@@ -63,7 +63,7 @@ The console also detects when your expression is complete by counting the bracke
 ```
 ### Exceptions ###
 
-The interpreter throws serveral exceptions:
+The interpreter throws several exceptions:
 
 *"reference to undefined identifier: `<identifier>`"*
 There was no variable with the identifier `<identifier>`
@@ -79,7 +79,7 @@ Builtins
 
 ### Supported Datatypes ###
 
-Following is a list of supported datatypes. This list will be expanded as more datatypes are implemented
+Following is a list of supported datatypes.
 
 * **Number**: floating point number
 * **True**: boolean true
@@ -212,3 +212,13 @@ define objects.
 
 
 # Experimental Lisp to Javascript Compiler #
+This project also includes a very experimental Lisp to Javascript Compiler. Although it compiles
+valid JavaScript there are serveral problems why it should not be used for anything:
+* JavaScript intendation is *interesting*
+* Semicolon insertion is broken, code works only because of JavaScript's ASI (Automatic Semicolon Insertion)
+* No errors whatsoever. Incorrect Lisp Syntax will result in an **empty output!** So count your brackets carefully!
+* Generated code is not very readable and therefore hard to debug
+
+How to use:
+Just type your Lisp code in the left window and press the compile button. The result will be pasted into the same window.
+There are also several examples in examples/Compiler.
