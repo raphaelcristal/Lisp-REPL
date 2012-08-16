@@ -41,7 +41,7 @@ then open SpecRunner.html.
 This software has been tested with the latest versions of **Chrome** and **Firefox**. It may work in other browsers but it is not guaranteed.
 
 Open index.html after the project was built. The interface consists of two windows:
-The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page. The _Compile_ Button will compile your Lisp to Javscript. You can find more information about the compiler [here](#BLA).
+The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page. The _Compile_ Button will compile your Lisp to Javscript. You can find more information about the compiler [here](#experimental-lisp-to-javascript-compiler).
 
 The interactive console on the right supports a few keyboard shortcuts you can use
 
@@ -219,6 +219,7 @@ valid JavaScript there are serveral problems why it should not be used for anyth
 * No errors whatsoever. Incorrect Lisp Syntax will result in an **empty output!** So count your brackets carefully!
 * Generated code is not very readable and therefore hard to debug
 
-How to use:
+### How to use: ###
 Just type your Lisp code in the left window and press the compile button. The result will be pasted into the same window.
+If you want to use the generated code, you need also to include src/js/helperFunctions.js in your site.
 There are also several examples in examples/Compiler.
