@@ -35,7 +35,7 @@ then open SpecRunner.html.
 
 ### How to use ###
 
-This software has been tested with the latest versions of *Chrome* and *Firefox*. It may work in other browsers but it is not guaranteed.
+This software has been tested with the latest versions of **Chrome** and **Firefox**. It may work in other browsers but it is not guaranteed.
 
 Open index.html after the project was built. The interface consists of two windows:
 The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page.
@@ -170,7 +170,7 @@ Assign a value to a variable with define:
 (define (myFunc x) (* x x))
 ```
 
-the short lambda define sytanx has also an implicit begin body and the result of the last expression
+The short lambda define sytanx has also an implicit begin body and the result of the last expression
 will be assigned to the variable. Read the object.lisp example to see how
 this can help you with defining objects.
 ```Scheme

@@ -57,7 +57,7 @@ functions =
     else
       "var #{compile ast[0]} = #{compile ast[1]};"
   'set!': (ast) ->
-    "#{compile ast[0]} = #{compile ast[1]};"
+    "#{compile ast[0]} = #{compile ast[1]}"
   'lambda': (ast) ->
     if ast[0].length is 0
       parms = ''
@@ -72,7 +72,6 @@ functions =
       "}"
   'begin': (ast) ->
     res = "(function() {\n"
-    console.log ast.length
     if ast.length is 1
       res += "\treturn #{compile ast[0]};\n"
     else
