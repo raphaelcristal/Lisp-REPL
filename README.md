@@ -9,17 +9,33 @@ Install [nodejs](nodejs.org) and [npm](npmjs.org). Then install CoffeeScript wit
 
     cake build
 
+### Libraries ###
+The following libraries are needed and should be extracted to ./lib
+
+* [Jasmine BDD Testframework](http://pivotal.github.com/jasmine/) Version: 1.2
+* [JQuery](http://jquery.com/) Version: 1.7.3
+* [Bootstrap](http://twitter.github.com/bootstrap/) Version: 2.0.4
+
 ### Tests ###
-To run the tests you will need the [Jasmine BDD Testframework](http://pivotal.github.com/jasmine/).
-Extract it to ./lib and run:
+Build the tests with
 
     cake test
 
-To execute the tests open SpecRunner.html.
+then open SpecRunner.html.
+
+### Project Structure ###
+
+* console.js: UI Behaviour
+* compiler.js: Experimental Lisp to Javascript Compiler
+* helperFunctions: helper functions for compiled javascript
+* interpreter.js: builtins and eval method
+* lisp.js: lisp datatypes
+* position.js: helper functions for html textarea
+* stringscanner.js: tokenizer and ast builder
 
 ### How to use ###
 
-This software has been tested with the latest versions of Chrome and Firefox. It may work in other browsers but it is not guaranteed.
+This software has been tested with the latest versions of *Chrome* and *Firefox*. It may work in other browsers but it is not guaranteed.
 
 Open index.html after the project was built. The interface consists of two windows:
 The right window is the REPL, which takes a single expression as an input and evaluates it immediatly. The left window takes multiple expresssion as input and they will be evaluated as you click the _Run_ button. After that you will be able to access your defined functions through the REPL. To save and load your code snippets you can use the save and load buttons. To clear the global environment and reset the interpreter, you can just reload the page.
