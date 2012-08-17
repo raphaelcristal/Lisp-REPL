@@ -28,13 +28,13 @@ then open SpecRunner.html.
 
 ### Project Structure ###
 
-* console.js: UI Behaviour
-* compiler.js: Experimental Lisp to Javascript Compiler
+* console.coffee: UI Behaviour
+* compiler.coffee: Experimental Lisp to Javascript Compiler
 * helperFunctions: helper functions for compiled javascript
-* interpreter.js: builtins and eval method
-* lisp.js: lisp datatypes
-* position.js: helper functions for html textarea
-* stringscanner.js: tokenizer and ast builder
+* interpreter.coffee: builtins and eval method
+* lisp.coffee: lisp datatypes
+* position.coffee: helper functions for html textarea
+* stringscanner.coffee: tokenizer and ast builder
 
 ### How to use ###
 
