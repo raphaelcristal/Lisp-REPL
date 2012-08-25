@@ -8,7 +8,7 @@ Lisp Interpreter written in CoffeeScript
 Change quality to HD!
 
 ### How to build ###
-Install [nodejs](nodejs.org) and [npm](npmjs.org). Then install CoffeeScript with *npm install -g coffee-script* and run:
+Install [nodejs](http://nodejs.org) and [npm](http://npmjs.org). Then install CoffeeScript with *npm install -g coffee-script* and run:
 
     cake build
 
