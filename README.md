@@ -2,7 +2,7 @@ Lisp Interpreter written in CoffeeScript
 ========================================
 
 ### Try it! ###
-[Lisp-REPL](http://pjuhri.github.com/Lisp-REPL/)
+[Lisp-REPL](http://raphaelbrand.github.com/Lisp-REPL/)
 
 [Video Tutorial](http://youtu.be/o-cqbVpyqSA)
 Change quality to HD!
