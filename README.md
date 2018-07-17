@@ -15,7 +15,7 @@ Install [nodejs](http://nodejs.org) and [npm](http://npmjs.org). Then install Co
 ### Libraries ###
 The following libraries are needed and should be extracted to ./lib
 
-* [Jasmine BDD Testframework](http://pivotal.github.com/jasmine/) Version: 1.2
+* [Jasmine BDD Testframework](https://jasmine.github.io/) Version: 1.2
 * [JQuery](http://jquery.com/) Version: 1.7.3
 * [Bootstrap](http://twitter.github.com/bootstrap/) Version: 2.0.4
 
